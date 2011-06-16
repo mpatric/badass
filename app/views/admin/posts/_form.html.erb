@@ -1,0 +1,33 @@
+<script type="text/javascript" >
+   $(document).ready(function() {
+      $("#markItUp").markItUp(mySettings);
+   });
+</script>
+<%= form.hidden_field :user_id, :value => @user.id %>
+<div>
+  <%= form.label :title_draft, 'Title' %>
+  <%= form.text_field :title_draft %>
+</div>
+<% if Tag.count > 0 %>
+  <div>
+    <%= form.label :tags %>
+    <% Tag.by_label.each do |tag| %>
+      <div class='tag'>
+        <%= check_box_tag "tag_ids[#{tag.id}]", 1, form.object.tags.include?(tag) %>
+        <%= tag.label %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<div>
+  <%= form.label :date %>
+  <%= form.text_field :date %>
+</div>
+<div>
+  <%= form.label :permalink, 'Permalink [leave blank to auto-generate]' %>
+  <%= form.text_field :permalink %>
+</div>
+<div>
+  <%= form.label :content_draft, 'Content' %>
+  <%= form.text_area :content_draft, :id => 'markItUp' %>
+</div>

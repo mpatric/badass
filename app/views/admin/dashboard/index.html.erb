@@ -1,0 +1,61 @@
+<h2>Dashboard</h2>
+<fieldset class='admin'>
+  <table>
+    <tr>
+      <th colspan='2'>Users</th>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Registered</td>
+      <td><%= pluralize User.count, "user" %></td>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Currently logged in</td>
+      <td><%= pluralize User.logged_in.count, "user" %></td>
+    </tr>
+    
+    <tr>
+      <th colspan='2'>Posts</th>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Total</td>
+      <td>
+        <%= pluralize Post.count, "post" %>
+        (<%= pluralize Post.outdated.count, "outdated post" %>,
+        <%= pluralize Post.unpublished.count, "unpublished post" %>)
+      </td>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Published or updated in the last 30 days</td>
+      <td><%= pluralize Post.published.since(Time.now - 30.days).count, "post" %></td>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Published or updated in the last 7 days</td>
+      <td><%= pluralize Post.published.since(Time.now - 7.days).count, "post" %></td>
+    </tr>
+    
+    <tr>
+      <th colspan='2'>Comments</th>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Total</td>
+      <td>
+        <%= pluralize Comment.count, "comment" %>
+        (<%= pluralize Comment.junk.count, "junk comment" %>)
+      </td>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Posted in the last 30 days</td>
+      <td>
+        <%= pluralize Comment.since(Time.now - 30.days).count, "comment" %>
+        (<%= pluralize Comment.since(Time.now - 30.days).junk.count, "junk comment" %>)
+      </td>
+    </tr>
+    <tr class="<%= cycle('dark', 'light') %>">
+      <td>Posted in the last 7 days</td>
+      <td>
+        <%= pluralize Comment.since(Time.now - 7.days).count, "comment" %>
+        (<%= pluralize Comment.since(Time.now - 7.days).junk.count, "junk comment" %>)
+      </td>
+    </tr>
+  </table>
+</fieldset>

@@ -1,0 +1,48 @@
+<h2>Comment <%= @comment.id %></h2>
+<fieldset class='admin'>
+  <div class='show'>
+    <div class='junk-stamp'>
+      <%= image_tag('/images/junk.png') if @comment.junk? %>
+    </div>
+    <span>
+      <label>Date:</label><%= format_timestamp(@comment.created_at) %>
+    </span>
+    <span>
+      <label>Author:</label><%= @comment.author %>
+    </span>
+    <span>
+      <label>Author Email:</label><%= link_to(@comment.author_email, 'mailto:' + @comment.author_email) %>
+    </span>
+    <span>
+      <label>Author Url:</label><%= link_to(@comment.author_url, @comment.author_url) unless @comment.author_url.blank? %>
+    </span>
+    <span>
+      <label>User IP:</label><%= @comment.user_ip %>
+    </span>
+    <span>
+      <label>User Agent:</label><%= @comment.user_agent %>
+    </span>
+    <span>
+      <label>Referrer:</label><%= link_to(@comment.referrer, @comment.referrer) unless @comment.referrer.blank? %>
+    </span>
+    <span>
+      <label>Post:</label><%= link_to(@comment.post.title_draft, admin_post_path(@comment.post)) %>
+    </span>
+    <span>
+      <label>Permalink:</label><%= link_to @comment.permalink, @comment.permalink_url if @comment.permalink_url %>
+      <%= @comment.permalink unless @comment.permalink_url %>
+    </span>
+    <div class='actions'>
+      <%= button(admin_comments_path(:post_id => @comment.post.id), '&laquo; Comments'.html_safe) %>
+      <%= button(edit_admin_comment_path(@comment), 'Edit') %>
+      <%= button_with_confirmation(admin_comment_notjunk_path(@comment), 'Not junk', 'Are you sure this comment is not junk?') if @comment.junk? %>
+      <%= button_with_confirmation(admin_comment_junk_path(@comment), 'Junk', 'Are you sure this comment is junk?') unless @comment.junk? %>
+      <%= button_with_confirmation(admin_comment_path(@comment), 'Delete', 'Are you sure you want to delete this comment?', 'delete') %>
+    </div>
+  </div>
+</fieldset>
+<fieldset class='content'>
+  <div class='comment'>
+    <%= @comment.content_html %>
+  </div>
+</fieldset>

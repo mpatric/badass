@@ -1,0 +1,54 @@
+<%= link_to('New post', new_admin_post_path, :class => 'new') %>
+<h2>Posts</h2>
+<fieldset class='admin'>
+  <%= will_paginate @posts %>
+  <% form_tag(admin_posts_path, :method => 'get', :class => 'filters') do %>
+    Tag
+    <%= select_tag(:tag_id, options_for_select([["All (#{Post.count})", nil]] + @tags.collect{|t| ["#{t.label} (#{t.posts.count})", t.id]}, @tag.nil? ? nil : @tag.id)) %>
+    Status
+    <%= select_tag(:publish_status, options_for_select([["All (#{@counts[:all]})", 'all'], ["Current (#{@counts[:current]})", 'current'], ["Outdated (#{@counts[:outdated]})", 'outdated'], ["Unpublished (#{@counts[:unpublished]})", 'unpublished']], @publish_status)) %>
+    <%= submit_tag 'filter' %>
+  <% end %>
+  <% if @posts.empty? %>
+    No posts yet
+  <% else %>
+    <table id='posts'>
+      <tr>
+        <th>Date</th>
+        <th>Version</th>
+        <th>Title</th>
+        <th>Tags</th>
+        <th>Posted by</th>
+        <th>Comments</th>
+      </tr>
+      <% @posts.each do |post| %>
+        <tr class="<%= cycle('dark', 'light') %><%= " not-author" if post.user != @current_user %>">
+          <td><%= format_date(post.date) %></td>
+          <td>
+            <div id='publish-info'>
+              <span class='summary <%= post.status %>'><%= post.version_draft %></span>
+            </div>
+          </td>
+          <td>
+            <span class='permalink'>
+              <%= link_to(image_tag('/images/permalink.png', :title => 'permalink'), post.permalink_url) if post.permalink_url %>
+            </span>
+            <%= link_to(post.title_draft, admin_post_path(post)) %>
+          </td>
+          <td>
+            <% unless post.tags.empty? %>
+              <ul class='tags'>
+                <% post.tags.by_label.each do |tag| %>
+                  <li><%= link_to(tag.label, admin_tag_path(tag)) %></li>
+                <% end %>
+              </ul>
+            <% end %>
+          </td>
+          <td><%= post.user.name %></td>
+          <td><%= comment_count_link(post) %></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @posts %>
+  <% end %>
+</fieldset>

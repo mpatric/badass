@@ -1,0 +1,71 @@
+<%= link_to('New post', new_admin_post_path, :class => 'new') %>
+<h2>Post <%= @post.id %></h2>
+<fieldset class='admin'>
+  <div class='show'>
+    <div id='publish-info'>
+      <% if @post.status == :outdated %>
+        <% diff = @post.version_draft - @post.version %>
+        <span class='outdated detail'>Outdated by <%= (diff == 1 ? "<b>1</b> revision" : "<b>#{diff}</b> revisions").html_safe %></span>
+      <% elsif @post.status == :current %>
+        <span class='current detail'>Current</span>
+      <% else %>
+        <span class='unpublished detail'>Unpublished</span>
+      <% end %>
+    </div>
+    <span>
+      <label>Date:</label><%= format_date(@post.date) %>
+    </span>
+    <span>
+      <label>Title:</label><%= @post.title_draft %>
+    </span>
+    <span>
+      <label>Tags:</label>
+      <%= "<i>(none)</i>".html_safe if @post.tags.empty? %>
+      <%= @post.tags.collect{ |tag| link_to(tag.label, admin_tag_path(tag)) }.join(', ').html_safe unless @post.tags.empty? %>
+    </span>
+    <span>
+      <label>Posted by:</label><%= @post.user.name %>
+    </span>
+    <span>
+      <label>First published at:</label><%= format_timestamp(@post.first_published_at) %>
+    </span>
+    <span>
+      <label>Last published at:</label><%= format_timestamp(@post.last_published_at) %>
+    </span>
+    <span>
+      <label>Version:</label><%= @post.version_draft %>
+    </span>
+    <span>
+      <label>Comments:</label><%= comment_count_link(@post) %>
+    </span>
+    <span>
+      <label>Permalink:</label>
+      <%=link_to @post.permalink, @post.permalink_url if @post.permalink_url %>
+      <%= @post.permalink unless @post.permalink_url %>
+    </span>
+    <div class='actions'>
+      <%= button(admin_posts_path, '&laquo; Posts'.html_safe) %>
+      <%= button(edit_admin_post_path(@post), 'Edit') %>
+      <% if @post.version_draft != @post.version %>
+        <%= button_with_confirmation(admin_post_publish_path(@post), 'Publish', 'Are you sure you want to publish this post?') %>
+      <% end %>
+      <% if @post.version_draft != @post.version and !@post.version.nil? %>
+        <%= button_with_confirmation(admin_post_quietly_publish_path(@post), 'Quiet publish', 'Are you sure you want to quietly publish this post?') %>
+      <% end %>
+      <% if @post.published? and @post.version_draft != @post.version %>
+        <%= button_with_confirmation(admin_post_revert_path(@post), 'Revert', 'Are you sure you want to revert this post?') %>
+      <% end %>
+      <% if @post.published? %>
+        <%= button_with_confirmation(admin_post_takedown_path(@post), 'Take down', 'Are you sure you want to take down this post?') %>
+      <% end %>
+      <%= button_with_confirmation(admin_post_path(@post), 'Delete', 'Are you sure you want to delete this post?', 'delete') %>
+    </div>
+  </div>
+</fieldset>
+<% unless @post.content_draft_html.blank? %>
+  <fieldset class='content'>
+    <article class='post'>
+      <%= @post.content_draft_html %>
+    </article>
+  </fieldset>
+<% end %>

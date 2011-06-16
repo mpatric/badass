@@ -1,0 +1,60 @@
+<h2>Comments</h2>
+<fieldset class='admin'>
+  <%= will_paginate @comments %>
+  <% form_tag(admin_comments_path, :method => 'get', :class => 'filters') do %>
+    Post
+    <%= select_tag(:post_id, options_for_select([["All (#{Comment.not_junk.count} + #{Comment.junk.count})", nil]] + @posts.select{ |p| p.comments.count > 0 }.collect{|p| ["#{p.title || p.title_draft} (#{p.comments.not_junk.count} + #{p.comments.junk.count})", p.id]}, @post.nil? ? nil : @post.id)) %>
+    Status
+    <%= select_tag(:junk_status, options_for_select([["All (#{@counts[:all]})", 'all'],["Not junk (#{@counts[:not_junk]})", 'not_junk'], ["Junk (#{@counts[:junk]})", 'junk']], @junk_status)) %>
+    <%= submit_tag 'filter' %>
+  <% end %>
+  <% if @comments.empty? %>
+    No comments yet
+  <% else %>
+    <% form_tag(bulk_action_admin_comments_path, :method => 'post') do %>
+      <table class='comments'>
+        <tr>
+          <th><%= check_box_tag 'all', 1, false, :class => 'check-all' %></th>
+          <th>Date</th>
+          <th>Author</th>
+          <th>&nbsp;</th>
+          <th>Comment</th>
+        </tr>
+        <% @comments.each do |comment| %>
+          <tr class="<%= cycle('dark', 'light') %><%= " not-author" if comment.post.nil? or comment.post.user != @current_user %>">
+            <th><%= check_box_tag "check[#{comment.id}]", 1, false, :class => 'checkable' %></th>
+            <td class='timestamp'>
+              <%= format_timestamp(comment.created_at, '<br/>') %>
+            </td>
+            <td>
+              <a name='<%= comment.id %>'></a>
+              <%= image_tag comment.avatar_url(request.host, request.port) %>
+              <%= comment.author if comment.author_url.blank? %>
+              <%=link_to(comment.author, comment.author_url) unless comment.author_url.blank? %>
+              <br/>
+              <%= link_to(comment.author_email, 'mailto:' + comment.author_email) %>
+            </td>
+            <td class='junk-stamp'>
+              <%= image_tag('/images/junk.png') if comment.junk? %>
+            </td>
+            <td class='comment'>
+              <% unless comment.junk? or comment.permalink_url.blank? %>
+                <span class='permalink'>
+                  <%= link_to(image_tag('/images/permalink.png', :title => 'permalink'), comment.permalink_url) %>
+                </span>
+              <% end %>
+              <%= link_to((comment.post.title || comment.post.title_draft) + "##{comment.id}", admin_comment_path(comment)) %><br/>
+              <%= truncate_string(comment.content, 175) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <%= will_paginate @comments %>
+      <div class='bulk-actions'>
+        <%= submit_tag 'delete selected', :name => 'delete', :class => 'must-confirm', :message => 'Are you sure you want to delete all the selected comments?' %>
+        <%= submit_tag 'junk selected', :name => 'junk', :class => 'must-confirm', :message => 'Are you sure all the selected comments are junk?' %>
+        <%= submit_tag 'not junk selected', :name => 'notjunk', :class => 'must-confirm', :message => 'Are you sure all the selected comments are not junk?' %>
+      </div>      
+    <% end %>
+  <% end %>
+</fieldset>

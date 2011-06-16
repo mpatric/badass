@@ -1,0 +1,3 @@
+class ApplicationController < BadassController
+
+end

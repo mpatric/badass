@@ -1,0 +1,28 @@
+<div>
+  <%= form.label :login %>
+  <%= form.text_field :login %>
+</div>
+<div>
+  <%= form.label :password, form.object.new_record? ? nil : 'Change password' %>
+  <%= form.password_field :password %>
+</div>
+<div>
+  <%= form.label :password_confirmation %>
+  <%= form.password_field :password_confirmation %>
+</div>
+<div>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+</div>
+<div>
+  <%= form.label :email %>
+  <%= form.text_field :email %>
+</div>
+<div>
+  <%= form.label :url %>
+  <%= form.text_field :url %>
+</div>
+<div>
+  <%= form.label :twitter_name %>
+  <%= form.text_field :twitter_name %>
+</div>

@@ -1,0 +1,31 @@
+<%= link_to('New tag', new_admin_tag_path, :class => 'new') %>
+<h2>Tags</h2>
+<fieldset class='admin'>
+  <% if @tags.empty? %>
+    No tags yet
+  <% else%>
+    <% unless @tags.empty? %>
+      <table>
+        <tr>
+          <th>Tag</th>
+          <th>Current posts</th>
+          <th>Outdated posts</th>
+          <th>Unpublished posts</th>
+        </tr>
+        <% @tags.each do |tag| %>
+          <tr class="<%= cycle('dark', 'light') %>">
+            <td>
+              <span class='permalink'>
+                <%= link_to(image_tag('/images/permalink.png', :title => 'permalink'), tag.permalink_url) if tag.permalink_url %>
+              </span>
+              <%= link_to(tag.label, admin_tag_path(tag)) %>
+            </td>
+            <td><%= tag.posts.current.empty? ? '0' : link_to("#{tag.posts.current.count}", admin_posts_path(:tag_id => tag.id, :publish_status => 'current')) %></td>
+            <td><%= tag.posts.outdated.empty? ? '0' : link_to("#{tag.posts.outdated.count}", admin_posts_path(:tag_id => tag.id, :publish_status => 'outdated')) %></td>
+            <td><%= tag.posts.unpublished.empty? ? '0' : link_to("#{tag.posts.unpublished.count}", admin_posts_path(:tag_id => tag.id, :publish_status => 'unpublished')) %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  <% end %>
+</fieldset>

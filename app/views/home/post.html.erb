@@ -1,0 +1,81 @@
+<article class="post">
+  <div class='titlebar'>
+    <h2><%=link_to @post.title, @post.permalink_url %></h2>
+  </div>
+  <%= @post.content_html %>
+  <div class='tagline'>
+    <%= image_tag @post.avatar_url(request.host, request.port) %>
+    <p>
+      <%= posted_at(@post) %> <%= posted_by(@post) %><%= ", " + updated_at(@post, false) unless @post.last_published_at == @post.first_published_at %>
+    </p>
+    <p>
+      <%= posted_in_tags(@post) %>
+    </p>
+  </div>
+</article>
+<a name='comments'></a>
+<% unless @post.comments.not_junk.empty? %>
+  <div class='comments'>
+    <h2>Comments</h2>
+    <ul>
+      <% @post.comments.not_junk.by_date_ascending.each_with_index do |comment,i| %>
+      <a name='<%= comment.id %>'></a>
+        <li>
+          <div class='avatar'>
+            <%= image_tag comment.avatar_url(request.host, request.port), :alt => '', :title => '' %>
+          </div>
+          <div class='comment'>
+            <div class='content'>
+              <%= comment.content_html %>
+            </div>
+            <div class='header'>
+              <%= comment.author if comment.author_url.blank? %>
+              <%= link_to(comment.author, comment.author_url) unless comment.author_url.blank? %>
+              commented
+              <a href='<%= comment.permalink_url %>'><%= format_timestamp_relative(comment.created_at) %></a>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<% if flash[:notice] %>
+  <p class='notice'><%= flash[:notice] %></p>
+<% else %>
+  <a name='new-comment'></a>
+  <div class='new-comment'>
+    <h2>Post a comment</h2>
+    <% form_for @comment, :url => '#new-comment' do |form| %>
+      <% if @comment.errors.any? %>
+        <div class="error_explanation">
+          <ul>
+            <% @comment.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= form.hidden_field :post_id, :value => @post.id %>
+      <div>
+        <%= form.label :author, 'Name' %>
+        <%= form.text_field :author %>
+      </div>
+      <div>
+        <%= form.label :author_email, 'Email address (will not be published)' %>
+        <%= form.text_field :author_email %>
+      </div>
+      <div>
+        <%= form.label :author_url, 'URL (optional)' %>
+        <%= form.text_field :author_url %>
+      </div>
+      <div>
+        <%= form.label :content, 'Your comment' %>
+        <%= form.text_area :content %>
+      </div>
+      <div>
+        <%= form.submit 'Comment', :class => 'button' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

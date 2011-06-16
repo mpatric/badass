@@ -1,0 +1,342 @@
+$background: #171717
+$normalfg: #aaa
+$brightfg: #fff
+$dimfg: #777
+
+$mybrown: #a6886e
+$myblue: #5e7b9c
+$mygreen: #5eff5e
+
+$hired: #d33
+$hiorange: #d93
+$higreen: #3d3
+
+$minwidth: 800px
+
+html, body
+  :height 100%
+
+body, p, ol, ul, td, th
+  :font-family verdana, arial, helvetica, sans-serif
+  :font-size 13px
+  :line-height 1.8em
+
+body
+  :background black
+  :color $normalfg
+  :font-weight normal
+  :margin 0
+  :padding 0
+  :overflow wrap
+  :min-width $minwidth
+  
+h1, h2 
+  :letter-spacing 0.25em
+  :font-weight normal
+  :padding 4px
+  :text-align left
+
+h1 
+  :color $myblue
+  :font-size 18px
+  :margin 0 0 12px 0
+
+h2 
+  :color $myblue
+  :font-size 15px
+  :margin 12px 0
+
+p 
+  :margin 12px 0 12px 0
+  :text-align justify
+
+label 
+  :padding 0
+  :color $brightfg
+  :font-weight normal
+
+ul 
+  :list-style-type circle
+  :margin 0.7em 0 0 1.4em
+  :padding 0
+
+li 
+  :margin 0px 0px 0.7em 0px
+  :padding 0
+
+a, a:link, a:visited, a:active 
+  :color $mybrown
+  :font-weight normal
+  :text-decoration none
+  img 
+    :background transparent
+
+a:hover
+  :color $myblue
+  :text-decoration none
+
+img, label, span, table, tr, th, td
+  :margin 0
+  :padding 0
+  :border 0
+
+table 
+  :border-collapse collapse
+
+th 
+  :text-align left
+  :font-weight normal
+  :color $brightfg
+
+td 
+  :text-align left
+  :vertical-align top
+
+input, button 
+  :font-size 13px
+  :color $normalfg
+  :background-color #171717
+  :margin-right 8px
+  :border 1px dotted #444
+  :border-radius 4px
+  :-webkit-border-radius 4px
+  :-moz-border-radius 4px
+
+input[type=submit], input[type=file], button 
+  :border 1px solid $mybrown
+  :background-color #2f251c
+
+input[type=submit], button 
+  :box-shadow 2px 2px 8px black
+  :-moz-box-shadow 2px 2px 8px black
+  :-webkit-box-shadow 2px 2px 8px black
+
+button 
+  :display inline
+
+textarea 
+  :color white
+  :background-color #171717
+  :border 1px dotted #444
+  :border-radius 4px
+  :-webkit-border-radius 4px
+  :-moz-border-radius 4px
+
+div.button 
+  :float left
+  :margin-right 8px
+
+#title-bar 
+  :border-top 1px solid grey
+  :border-bottom 1px solid grey
+  :background #333
+  /* for IE */
+  :filter= progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#000000')
+  /* for webkit browsers */
+  :background -webkit-gradient(linear, left top, left bottom, from(#444), to(#222))
+  /* for firefox 3.6+ */
+  :background -moz-linear-gradient(top,  #444,  #222)
+  ul 
+    :list-style-type none
+    :padding 0
+    :margin 0
+    li 
+      :display inline
+      :padding 0 10px
+  #login-info 
+    :float right
+    :text-align right
+    :padding 0 10px
+    :color $myblue
+
+a.new 
+  :float right
+  :line-height 20px
+  :background url(/images/add.png) no-repeat center right
+  :padding-right 30px
+  :margin-right 10px
+  :margin-top 18px
+  :display black
+
+fieldset.admin 
+  :background $background
+  :min-width $minwidth
+  :padding 8px
+  :border 1px solid grey
+  div 
+    :margin 0
+    :padding 0
+  form 
+    input[type="text"] 
+      :margin-bottom 12px
+    label 
+      :margin 4px 0 0 0
+      :display block
+  form.filters 
+    :padding 0
+    :margin-bottom 12px
+    :display block
+    select 
+      :margin-right 12px
+  div.pagination 
+    :padding-top 6px
+    :float right
+    span.disabled 
+      :display none
+  div.actions 
+  div.bulk-actions 
+    :margin-top 6px
+  div.show 
+    span 
+      :margin 0 0 12px 0
+      :display block
+    label 
+      :margin-right 8px
+    div.junk-stamp 
+      :float right
+    div.thumbnail 
+      :width 100px
+      :margin-bottom 12px
+  div#publish-info 
+    span 
+      :color black
+      :border-radius 6px
+      :-moz-border-radius 6px
+      :-webkit-border-radius 6px
+      :box-shadow 2px 2px 8px black
+      :-moz-box-shadow 2px 2px 8px black
+      :-webkit-box-shadow 2px 2px 8px black
+      :padding 4px
+      :text-align center
+      :display block
+    span.detail 
+      :float right
+      :margin-top 2px
+    span.summary 
+      :width 30px
+    .unpublished 
+      :background $hired
+    .outdated 
+      :background $hiorange
+    .current 
+      :background $higreen
+  span.field-name 
+    :font-weight bold
+    :margin-right 8px
+  p 
+    :margin 0
+    :padding 4px 0
+  textarea 
+    :width 100%
+    :height 300px
+  input[type=text], input[type=password] 
+    :width 400px
+  input.button 
+    :width inherit
+    :margin-top 16px
+  table 
+    :width 100%
+    :border-bottom 2px solid $background
+    tr 
+      :border-top 2px solid $background
+    tr.content 
+      :border-top none
+    th 
+      :padding 0 4px
+      :text-align left
+    td
+      :padding 4px
+      :line-height 24px
+      :vertical-align top
+    td.thumbnail
+      :width 100px
+      :text-align center
+    tr.not-author 
+      :color $dimfg
+  table.comments 
+    td.comment 
+      :width 50%
+    td.timestamp 
+      :white-space nowrap
+    td.junk-stamp 
+      :vertical-align middle
+  div.tag 
+    :white-space nowrap
+  ul.tags 
+    :list-style-type none
+    :margin 0
+    :padding 0
+    li 
+      :margin 0
+      :padding 0
+
+fieldset.content 
+  :padding 0
+  :border 1px solid grey
+  :margin-top 12px
+  article.post, div.comment 
+    :padding 0 8px
+
+.dark 
+  :background-color #222
+
+.light 
+  :background-color #444
+
+.dark:hover, .light:hover 
+  :background-color #226
+
+.permalink 
+  :width 16px
+  :display inline-table
+
+.field_with_errors label 
+  :color red
+
+.field_with_errors input, .field_with_errors textarea 
+  :background-color #933
+  :display table
+
+.error_explanation 
+  :background #333
+  :border 1px solid grey
+  h2 
+    :margin 0
+    :color white
+  p 
+    :display none
+  ul 
+    li 
+      :list-style none
+
+.flash 
+  :min-width $minwidth
+  :position absolute
+  :margin-left auto
+  :margin-right auto
+  :left 0
+  :right 0
+  :text-align center
+
+.error 
+  :color $hired
+
+.notice 
+  :color $higreen
+
+#markdown-syntax 
+  h1 
+    :font-size 15px
+  h2 
+    :font-size 13px
+  ul 
+    :font-size 10px
+    :list-style-type none
+    :margin 0 0 10px 0
+    :padding 0
+    li 
+      :margin 0
+      :padding 0
+
+.clear
+  :clear both

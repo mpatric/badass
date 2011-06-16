@@ -1,0 +1,31 @@
+<% if @tag %>
+  <h2><%= @tag.label %></h2>
+<% end %>
+<% if @posts.empty? %>
+  No posts
+<% else %>
+  <div class='posts'>
+    <% @posts.each do |post| %>
+      <div class='post'>
+        <div class='titlebar'>
+          <h2><%=link_to post.title, post.permalink_url %></h2>
+        </div>
+        <div class='tagline'>
+          <%= posted_or_updated_at_with_author(post) %>,
+          <%= link_to comment_count_description(post), "#{post.permalink_url}#comments" %>
+        </div>
+        <div class='content'>
+          <%= post.content_short_html %>
+        </div>
+        <% if post.content_shortened? %>
+          <div class='more'>
+            <%= link_to 'read more &raquo;'.html_safe, post.permalink_url %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class='home-pagination'>
+    <%= home_paginate @posts %>
+  </div>
+<% end %>

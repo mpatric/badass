@@ -1,0 +1,10 @@
+<h2>New tag</h2>
+<fieldset class='admin'>
+  <% form_for @tag, :url => admin_tags_path do |form| %>
+    <%= render :partial => '/admin/errors', :locals => { :errors => @tag.errors } %>
+    <%= render :partial => 'form', :object => form %>
+    <div class='actions'>
+      <%= form.submit 'Create', :class => 'button' %>
+    </div>
+  <% end %>
+</fieldset>

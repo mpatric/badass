@@ -1,0 +1,19 @@
+<%
+  $twitter ||= Twitter.instance
+  tweets = $twitter.tweets
+%>
+<% if tweets %>
+  <div class='tweets'>
+    <h3>Recent tweets</h3>
+    <% tweets[0..4].each do |tweet| %>
+      <div class='tweet'>
+        <div class='text'><%= link_to tweet.name, tweet.user_url %>: <%= tweet.text %></div>
+        <span class='timestamp'>
+          <%= format_timestamp_relative(tweet.timestamp) %>
+          <%= link_to 'link', tweet.url %>
+          <%= link_to 'reply', tweet.reply_url %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+<% end %>

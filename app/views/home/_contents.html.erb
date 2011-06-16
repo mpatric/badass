@@ -1,0 +1,18 @@
+<% unless @all_posts.empty? %>
+  <div class='contents'>
+    <% unless @tag %>
+      <% unless @post %>
+        <h3>All posts</h3>
+      <% else %>
+        <h3>Related posts</h3>
+      <% end %>
+    <% else %>
+      <h3>Posts in <%= @tag.label %></h3>
+    <% end %>
+    <ul>
+      <% @all_posts.each do |post| %>
+        <li><%= link_to post.title, post.permalink_url %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

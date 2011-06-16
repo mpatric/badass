@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= controller.action_name %> <%= controller.controller_name %> - blog admin</title>
+  <%= stylesheet_link_tag 'admin' %>
+  <%= stylesheet_link_tag 'content' %>
+  <%= stylesheet_link_tag '/markitup/skins/simple/style.css' %>
+  <%= stylesheet_link_tag '/markitup/sets/badass/style.css' %>
+  <%= javascript_include_tag APP_CONFIG.jquery_lib %>
+  <%= javascript_include_tag '/javascripts/badass.js' %>
+  <%= javascript_include_tag '/javascripts/application.js' %>
+  <%= javascript_include_tag src='/markitup/jquery.markitup.js' %>
+  <%= javascript_include_tag src='/markitup/sets/badass/set.js' %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<h1>Blog Admin</h1>
+<div id='title-bar'>
+  <% if current_user %>
+    <span id='login-info'><%= current_user.login %> logged in</span>
+  <% end %>
+  <ul>
+    <% if !current_user %>
+      <% if User.can_register? %>
+        <li><%= link_to 'Register', register_path %></li>
+      <% end %>
+      <%= link_to 'Log In', login_path %>
+    <% else %>
+      <li><%= link_to 'Dashboard', admin_dashboard_index_path %></li>
+      <li><%= link_to 'Tags', admin_tags_path %></li>
+      <li><%= link_to 'Posts', admin_posts_path %></li>
+      <li><%= link_to 'Comments', admin_comments_path %></li>
+      <li><%= link_to 'Assets', admin_assets_path %></li>
+      <li><%= link_to 'Profile', admin_profile_path %></li>
+      <li><%= link_to 'Logout', logout_path, :method => :delete, :confirm => "Are you sure you want to logout?" %></li>
+    <% end %>
+  </ul>
+</div>
+<% if flash[:error] %>
+  <p class='flash error'><%= flash[:error] %></p>
+<% elsif flash[:notice] %>
+  <p class='flash notice'><%= flash[:notice] %></p>
+<% end %>
+<%= yield  %>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<h2>Edit comment <%= @comment.id %></h2>
+<fieldset class='admin'>
+  <% form_for @comment, :url => admin_comment_path(@comment) do |form| %>
+    <%= render :partial => '/admin/errors', :locals => { :errors => @comment.errors } %>
+    <%= render :partial => 'form', :object => form %>
+    <div class='actions'>
+      <%= form.submit 'Update', :class => 'button', :name => 'update' %>
+      <%= form.submit 'Cancel', :class => 'button', :name => 'cancel' %>
+    </div>
+  <% end %>
+</fieldset>
