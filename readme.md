@@ -1,4 +1,4 @@
-== Steps to generate a blog using this engine
+# Steps to generate a blog using this engine
 
 Create a new rails app:
 
@@ -40,7 +40,7 @@ Go to http://localhost:3000/admin with your web browser for the admin interface,
 Go to http://localhost:3000/ with your web browser for the blog
 
 
-== Customising the app:
+# Customising the app:
 
 Edit the configuration file config/badass.yml. The keys are fairly self-explanatory. If you want to use akismet for spam protection you will need to register at http://akismet.com/ and get an API key. If you want to track analytics with google analytics you will need your analytics account id (the number starting 'UA-').
 
@@ -54,12 +54,12 @@ If you want some information to appear on the top-right of the page (typically i
 
 If you are setting up a personal blog, you'll probably want to leave max_users for production in badass.yml on 1, which means as soon as you register yourself it won't be possible for other people to register on your site. If you're setting up a blog for multiple people to use, you might want to increase this number.
 
-== Deploying to Heroku:
+# Deploying to Heroku:
 
 TODO
 
 
-== Updating your app to the latest version of badass
+# Updating your app to the latest version of badass
 
 It is strongly recommended that the generator is re-run whenever the badass gem is updated, as files generated with the site generator may have changed too. Run:
 
