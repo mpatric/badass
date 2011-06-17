@@ -5,10 +5,10 @@ A [Rails](http://rubyonrails.org/) engine for building blogging applications. It
 Some features:
 
 -   Admin interface, with support for (unpublished) draft posts and draft versions
--   Anti-spam protection on comments (via [Akismet](http://akismet.com/)
+-   Anti-spam protection on comments via [Akismet](http://akismet.com/)
 -   Assets stored on [Amazon S3](http://aws.amazon.com/s3/)
 -   Avatars on comments pulled from [Gravatar](http://gravatar.com/)
--   Apps built with this engine can easily be hosted on [Heroku](http://www.heroku.com/).
+-   Apps built with this engine can easily be hosted on [Heroku](http://www.heroku.com/)
 -   Atom feeds for posts and comments
 -   Highly customisable
 
@@ -112,6 +112,8 @@ That will re-run the site generator, but skip the files you have modified so the
 Things that might be added in the future:
 
 -   Email notifications
+-   More semantic markup
+-   Additional 'themes' out of the box
 -   Ability to close a post to comments
 -   Validate email address on comment entry
 -   Caching
