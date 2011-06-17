@@ -1,16 +1,16 @@
-# About
+# Badass
 
-This is a [Rails](http://rubyonrails.org/) engine for building a blogging application and is what drives my personal blog at [mpatric.com](http://mpatric.com/).
+A [Rails](http://rubyonrails.org/) engine for building blogging applications. It  is what drives my personal blog at [mpatric.com](http://mpatric.com/).
 It uses [Gravatar](http://gravatar.com/) for avatars, [Akismet](http://akismet.com/) for anti-spam and [Amazon S3](http://aws.amazon.com/s3/) for storing assets.
 Apps built with this engine can easily be hosted on [Heroku](http://www.heroku.com/).
 
 ## Acknowledgements
 
-This app makes use of [MarkItUp](http://markitup.jaysalvat.com/)
+This app makes use of [MarkItUp](http://markitup.jaysalvat.com/).
 
 ## Copyright
 
-Copyright (c) 2011 Michael Patricios.
+Copyright (c) 2011 Michael Patricios. See mit-license.txt for details.
 
 
 # How to generate a blog using this engine
@@ -55,11 +55,11 @@ Go to http://localhost:3000/admin with your web browser for the admin interface,
 Go to http://localhost:3000/ with your web browser for the blog
 
 
-# Customising the app:
+# Customising the app
 
 ## Configuration
 
-Edit the configuration file config/badass.yml. The keys are fairly self-explanatory. If you want to use akismet for spam protection you will need to register at [http://akismet.com/](http://akismet.com/) and get an API key. If you want to track analytics with google analytics you will need your analytics account id (the number starting 'UA-').
+Edit the configuration file config/badass.yml. The keys are fairly self-explanatory. If you want to use Akismet for spam protection you will need to register at [akismet.com](http://akismet.com/) and get an API key. If you want to track analytics with google analytics you will need your analytics account id (the number starting 'UA-').
 
 Edit the Amazon s3 configuration in config/s3.yml to include your access key id and secret access key. You will need to sign up for Amazon web services to use this. You won't be able to upload assets to your blog without setting up s3 support.
 
@@ -83,11 +83,7 @@ You are provided with three [sass](http://sass-lang.com/) stylesheets in public/
 -   site.sass - styles for the public blog site
 -   content.sass - styles for the content, primarily for the public blog site, but also used in the admin interface for previewing posts
 
-Each of these stylesheets pulls in the default styles from the badass gem. You can easily over-ride any of these styles by entering styles into these three stylesheets.
-
-# Deploying to Heroku:
-
-TODO
+Each of these stylesheets pulls in the default styles from the badass gem. You can easily over-ride any of the styles in the application by entering styles into these three stylesheets. Do not remove the import statements at the start of each stylesheet, or you will lose all the default styling.
 
 
 # Updating your app to the latest version of badass
