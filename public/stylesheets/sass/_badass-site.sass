@@ -90,10 +90,12 @@ div.main-wrapper
     :width 276px
     :padding 8px 12px
     :margin 8px 0
-    div.about
-      :padding-bottom 8px
+    div.about,div.tweets,div.tags,div.contents,div.powered
+      :padding-bottom 16px
       :margin-bottom 8px
       :border-bottom 1px dotted #444
+    div.about
+      :padding-bottom 8px
       span.contact
         :display block
         :line-height 16px
@@ -102,33 +104,25 @@ div.main-wrapper
           :margin-right 4px
         img
           :border 0
-
     div.tweets
-      :padding-bottom 16px
-      :margin-bottom 8px
       div.tweet
         div.text
           :overflow hidden
-
     div.tags
-      :padding-bottom 16px
-      :margin-bottom 8px
-      :border-bottom 1px dotted #444
       ul
         :padding 0
         :margin 0
         li
           :list-style none
-
     div.contents
-      :padding-bottom 16px
-      :margin-bottom 8px
-      :border-bottom 1px dotted #444
       ul
         :padding 0
         :margin 0
         li
           :list-style none
+    div.powered
+      :border-bottom none
+      :text-align right
 
 article.post
   :display block
