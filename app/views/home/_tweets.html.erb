@@ -2,7 +2,7 @@
   $twitter ||= Twitter.instance
   tweets = $twitter.tweets
 %>
-<% if tweets %>
+<% if tweets and tweets.any? %>
   <div class='tweets'>
     <h3>Recent tweets</h3>
     <% tweets[0..4].each do |tweet| %>
