@@ -30,7 +30,7 @@ Create a new rails app:
 
 Edit the gemfile and add the badass gem:
 
-    gem 'badass', :git => 'git@github.com:mpatric/badass.git', :branch => 'master'
+    gem 'badass', :git => 'git://github.com/mpatric/badass.git', :branch => 'master'
 
 Make sure you have bundler installed (with sudo if you're not using rvm):
 
