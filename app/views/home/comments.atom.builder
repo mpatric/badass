@@ -3,7 +3,7 @@ atom_feed(:schema_date => 2009, :root_url => root_url, :url => '/comments.atom')
   feed.title "#{APP_CONFIG.blog_title} - #{@post.title} - Comments Feed" if @post
   feed.updated @comments.first.updated_at
   for comment in @comments
-    feed.entry(comment, :url => File.join(APP_CONFIG.domain, comment.permalink_url)) do |entry|
+    feed.entry(comment, :url => "http://#{File.join(APP_CONFIG.domain, comment.permalink_url)}") do |entry|
       entry.title comment.post.title
       entry.updated comment.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ")
       entry.author do |author|
