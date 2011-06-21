@@ -113,6 +113,7 @@ Things that might be added in the future:
 
 -   Email notifications
 -   More semantic markup
+-   Auto sitemap generation
 -   Additional 'themes' out of the box
 -   Ability to close a post to comments
 -   Validate email address on comment entry
