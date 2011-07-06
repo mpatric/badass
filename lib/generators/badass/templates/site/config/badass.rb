@@ -6,6 +6,7 @@ common:
   posts_per_page: 5
   posts_in_feed: 50
   comments_in_feed: 250
+  email_enabled: true
   akismet_enabled: false
   akismet_api_key:
   twitter_enabled: true
