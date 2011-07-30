@@ -1,6 +1,6 @@
 <h2>Edit Profile</h2>
 <fieldset class='admin'>
-  <% form_for @user, :url => admin_profile_path do |form| %>
+  <%= form_for @user, :url => admin_profile_path do |form| %>
     <%= render :partial => '/admin/errors', :locals => { :errors => @user.errors } %>
     <%= render :partial => 'form', :object => form %>
     <div class='actions'>

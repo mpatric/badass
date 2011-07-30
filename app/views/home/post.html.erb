@@ -46,7 +46,7 @@
   <a name='new-comment'></a>
   <div class='new-comment'>
     <h2>Post a comment</h2>
-    <% form_for @comment, :url => '#new-comment' do |form| %>
+    <%= form_for @comment, :url => '#new-comment' do |form| %>
       <% if @comment.errors.any? %>
         <div class="error_explanation">
           <ul>

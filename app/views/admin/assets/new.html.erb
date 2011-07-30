@@ -1,6 +1,6 @@
 <h2>New asset</h2>
 <fieldset class='admin'>
-  <% form_for @asset, :url => admin_assets_path, :html => { :multipart => true } do |form| %>
+  <%= form_for @asset, :url => admin_assets_path, :html => { :multipart => true } do |form| %>
     <%= render :partial => '/admin/errors', :locals => { :errors => @asset.errors } %>
     <%= form.hidden_field :user_id, :value => @user.id %>
     <div>

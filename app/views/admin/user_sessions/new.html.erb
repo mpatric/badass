@@ -1,6 +1,6 @@
 <h2>Login</h2>
 <fieldset class='admin'>
-  <% form_for @user_session, :url => admin_user_session_path do |form| %>
+  <%= form_for @user_session, :url => admin_user_session_path do |form| %>
     <%= render :partial => '/admin/errors', :locals => { :errors => @user_session.errors } %>
     <div>
       <%= form.label :login %>
