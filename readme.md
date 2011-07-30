@@ -61,7 +61,6 @@ Go to http://localhost:3000/admin with your web browser for the admin interface,
 
 Go to http://localhost:3000/ with your web browser for the blog
 
-
 # Customising the app
 
 ## Configuration
@@ -92,6 +91,22 @@ You are provided with three [sass](http://sass-lang.com/) stylesheets in public/
 
 Each of these stylesheets pulls in the default styles from the badass gem. You can easily over-ride any of the styles in the application by entering styles into these three stylesheets. Do not remove the import statements at the start of each stylesheet, or you will lose all the default styling.
 
+## Setting up email support
+
+As of version 0.2, the author of a post can get email notifications when comments are made to their posts. In order to enable this functionality, ensure these two keys are set in your badass.yml file (with an appropriate email address):
+
+    email_enabled: true
+    email_sender: 'noreply@mydomain.com'
+
+Then make sure you set up the smtp settings for action mailer (usually in config/environment/production.rb). If you are using gmail, these are the settings:
+
+    config.action_mailer.smtp_settings[:address] = 'smtp.gmail.com'
+    config.action_mailer.smtp_settings[:port] = 587
+    config.action_mailer.smtp_settings[:domain] = ('gmail.com' or your domain if you have a custom gmail domain)
+    config.action_mailer.smtp_settings[:user_name] = (full username, e.g. 'myname@gmail.com' or 'myname@mydomain.com')
+    config.action_mailer.smtp_settings[:password] = (password)
+    config.action_mailer.smtp_settings[:authentication] = 'plain'
+    config.action_mailer.smtp_settings[:enable_starttls_auto] = true
 
 # Updating your app to the latest version of badass
 
@@ -111,7 +126,6 @@ That will re-run the site generator, but skip the files you have modified so the
 
 Things that might be added in the future:
 
--   Email notifications
 -   More semantic markup
 -   Auto sitemap generation
 -   Additional 'themes' out of the box
@@ -121,3 +135,4 @@ Things that might be added in the future:
 -   Better Twitter integration: tweet this post, with tweet count
 -   Trackbacks
 -   Pingbacks
+-   Email followup comments to other commenters, with unsubscribe functionality
