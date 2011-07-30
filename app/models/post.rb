@@ -53,6 +53,10 @@ class Post < ActiveRecord::Base
     self.published? ? "/#{self.permalink}" : nil
   end
   
+  def full_permalink_url
+    permalink_url ? "http://#{File.join(APP_CONFIG.domain, permalink_url)}" : nil
+  end
+  
   def preview_url
     "/#{self.permalink}/preview"
   end

@@ -32,6 +32,10 @@ class Comment < ActiveRecord::Base
     self.post.permalink_url ? "#{self.post.permalink_url}##{self.id}" : nil
   end
   
+  def full_permalink_url
+    permalink_url ? "http://#{File.join(APP_CONFIG.domain, permalink_url)}" : nil
+  end
+  
   def avatar_url(default_host=nil, default_port=nil)
     Avatar.avatar_url(self.author_email, default_host, default_port)
   end
