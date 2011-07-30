@@ -10,6 +10,7 @@ require 'sass'
 require 'paperclip'
 require 'grackle'
 require 'aws/s3'
+require 'nokogiri'
 
 module Badass
   class Engine < Rails::Engine

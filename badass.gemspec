@@ -30,4 +30,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency(%q<paperclip>, ["2.3.11"])
   s.add_runtime_dependency(%q<grackle>, ["0.1.10"])
   s.add_runtime_dependency(%q<aws-s3>, ["0.6.2"])
+  s.add_runtime_dependency(%q<nokogiri>, ["1.5.0"])
 end

@@ -24,6 +24,10 @@ class Comment < ActiveRecord::Base
     markdown(self.content)
   end
   
+  def content_text
+    Nokogiri::HTML(content_html).xpath("//text()").text
+  end
+  
   def permalink
     "#{self.post.permalink}##{self.id}"
   end
