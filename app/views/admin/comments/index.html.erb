@@ -1,7 +1,7 @@
 <h2>Comments</h2>
 <fieldset class='admin'>
   <%= will_paginate @comments %>
-  <% form_tag(admin_comments_path, :method => 'get', :class => 'filters') do %>
+  <%= form_tag(admin_comments_path, :method => 'get', :class => 'filters') do %>
     Post
     <%= select_tag(:post_id, options_for_select([["All (#{Comment.not_junk.count} + #{Comment.junk.count})", nil]] + @posts.select{ |p| p.comments.count > 0 }.collect{|p| ["#{p.title || p.title_draft} (#{p.comments.not_junk.count} + #{p.comments.junk.count})", p.id]}, @post.nil? ? nil : @post.id)) %>
     Status
@@ -11,7 +11,7 @@
   <% if @comments.empty? %>
     No comments yet
   <% else %>
-    <% form_tag(bulk_action_admin_comments_path, :method => 'post') do %>
+    <%= form_tag(bulk_action_admin_comments_path, :method => 'post') do %>
       <table class='comments'>
         <tr>
           <th><%= check_box_tag 'all', 1, false, :class => 'check-all' %></th>

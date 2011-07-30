@@ -2,7 +2,7 @@
 <h2>Posts</h2>
 <fieldset class='admin'>
   <%= will_paginate @posts %>
-  <% form_tag(admin_posts_path, :method => 'get', :class => 'filters') do %>
+  <%= form_tag(admin_posts_path, :method => 'get', :class => 'filters') do %>
     Tag
     <%= select_tag(:tag_id, options_for_select([["All (#{Post.count})", nil]] + @tags.collect{|t| ["#{t.label} (#{t.posts.count})", t.id]}, @tag.nil? ? nil : @tag.id)) %>
     Status
