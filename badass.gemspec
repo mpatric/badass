@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency(%q<rails>, ["3.0.8"])
+  s.add_runtime_dependency(%q<rails>, ["3.0.9"])
   s.add_runtime_dependency(%q<mysql2>, ["0.2.11"])
   s.add_runtime_dependency(%q<rake>, ["0.8.7"])
-  s.add_runtime_dependency(%q<authlogic>, ["2.1.6"])
+  s.add_runtime_dependency(%q<authlogic>, ["3.0.3"])
   s.add_runtime_dependency(%q<bluecloth>, ["2.0.11"])
   s.add_runtime_dependency(%q<will_paginate>, ["2.3.15"])
   s.add_runtime_dependency(%q<gravatar>, ["1.0"])
