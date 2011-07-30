@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+      <i><%= @comment.author %></i> has made a
+      <%= link_to 'comment', @comment.full_permalink_url %>
+      on the post titled <i><%= @comment.post.title %></i>:
+    </p>
+    <% if @comment.junk? %>
+    <p>
+      <b>This comment appears to be spam and has been marked as JUNK</b>
+    </p>
+    <% end %>
+    <p>
+      <%= @comment.content_html %>
+    </p>
+  </body>
+</html>

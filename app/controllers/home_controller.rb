@@ -33,6 +33,7 @@ class HomeController < ApplicationController
         referrer = request.env['HTTP_REFERER']
         @comment = Comment.new(params[:comment].merge({:user_ip => user_ip, :user_agent => user_agent, :referrer => referrer}))
         if @comment.save
+          AuthorMailer.new_comment(@comment).deliver
           flash[:notice] = "Thank you for your comment." unless @comment.junk?
           flash[:notice] = "Thank you for your comment, it will be vetted in due course." if @comment.junk?
           params.delete(:comment)

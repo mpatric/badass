@@ -1,0 +1,5 @@
+<%= @comment.author %> has made a comment on the post titled <i><%= @comment.post.title %></i>:
+<%= "\nThis comment appears to be spam and has been marked as JUNK\n" if @comment.junk? %>
+<%= @comment.content_text %>
+
+Link: <%= link_to 'comment', @comment.full_permalink_url %>
