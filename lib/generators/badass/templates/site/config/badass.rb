@@ -6,7 +6,8 @@ common:
   posts_per_page: 5
   posts_in_feed: 50
   comments_in_feed: 250
-  email_enabled: true
+  email_enabled: false
+  email_sender: 'noreply@<%= @name.gsub('_', '') %>.com'
   akismet_enabled: false
   akismet_api_key:
   twitter_enabled: true
@@ -23,6 +24,7 @@ development:
 test:
 
 production:
+  email_enabled: true
   akismet_enabled: true
   max_users: 1
   jquery_lib: 'jquery-1.4.4.min.js'

@@ -1,3 +1,4 @@
+# default action mailer config - can be over-ridden in application.rb or environments/*
 if defined? APP_CONFIG and APP_CONFIG.email_enabled
   am_config = Rails.application.config.action_mailer
   am_config.perform_deliveries = true if am_config.perform_deliveries.nil?
