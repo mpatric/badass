@@ -6,7 +6,7 @@ class Asset < ActiveRecord::Base
   validates_attachment_presence :upload
   
   has_attached_file :upload, :styles => { :thumb => "100x100>" }, :path => "/assets/:style/:basename.:extension",
-                    :storage => :s3, :s3_credentials => "#{RAILS_ROOT}/config/s3.yml"
+                    :storage => :s3, :s3_credentials => "#{::Rails.root}/config/s3.yml"
   
   before_post_process :is_image?
   
