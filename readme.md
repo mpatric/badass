@@ -9,6 +9,7 @@ Some features:
 -   Assets stored on [Amazon S3](http://aws.amazon.com/s3/)
 -   Avatars on comments pulled from [Gravatar](http://gravatar.com/)
 -   Apps built with this engine can easily be hosted on [Heroku](http://www.heroku.com/)
+-   Email notifications
 -   Atom feeds for posts and comments
 -   Highly customisable
 
