@@ -3,10 +3,8 @@ atom_feed(:schema_date => 2009, :root_url => root_url, :url => '/posts.atom') do
   feed.title "#{APP_CONFIG.blog_title} - #{@tag.label} - Posts Feed" if @tag
   feed.updated @posts.first.updated_at
   for post in @posts
-    feed.entry(post, :url => post.full_permalink_url) do |entry|
+    feed.entry(post, {:url => post.full_permalink_url, :published => post.first_published_at, :updated => post.updated_at}) do |entry|
       entry.title post.title
-      entry.updated post.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ")
-      entry.published post.first_published_at.strftime("%Y-%m-%dT%H:%M:%SZ")
       entry.author do |author|
         author.name post.user.name
         author.url post.user.url
