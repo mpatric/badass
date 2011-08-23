@@ -1,5 +1,7 @@
 <% if APP_CONFIG.google_analytics_enabled %>
-  <meta name="google-site-verification" content="cZiPE2baj2TrdMtQXrwWBFXiG-BlZ5O1HhN5XbDAE4M" />
+  <% if APP_CONFIG.google_site_verification %>
+    <meta name="google-site-verification" content="<%= APP_CONFIG.google_site_verification %>" />
+  <% end %>
   <script type="text/javascript">
 
     var _gaq = _gaq || [];
