@@ -14,6 +14,7 @@ common:
   twitter_cache_time: 600
   google_analytics_enabled: false
   google_analytics_id:
+  google_site_verification:
   max_users: 5
   jquery_lib: 'jquery-1.4.4.js'
 
