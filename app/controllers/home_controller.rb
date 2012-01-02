@@ -24,8 +24,11 @@ class HomeController < ApplicationController
     else
       @all_tags = Tag.with_published_posts.by_label.uniq
       @all_posts = Post.published.by_last_published.select{ |p| !(p.tags & @post.tags).empty? }.reject{ |p| p == @post }
-      unless params[:comment]
+      if !params[:comment]
         @comment = Comment.new
+      elsif APP_CONFIG.comments_disabled
+        render_404
+        return
       else
         # create comment
         user_ip = request.env['REMOTE_ADDR']
@@ -78,7 +81,7 @@ class HomeController < ApplicationController
   
   def render_404(exception = nil)
     respond_to do |format|
-      format.html { render :file => "#{Rails.root}/public/404.html", :status => :not_found }
+      format.html { render :layout => nil, :file => "#{Rails.root}/public/404.html", :status => :not_found }
       format.xml  { head :not_found }
       format.any  { head :not_found }
     end
