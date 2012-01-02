@@ -1,4 +1,4 @@
-<% unless @all_posts.empty? %>
+<% if !@all_posts.nil? and @all_posts.any? %>
   <div class='contents'>
     <% unless @tag %>
       <% unless @post %>
