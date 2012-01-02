@@ -16,6 +16,7 @@ common:
   google_analytics_id:
   google_site_verification:
   max_users: 5
+  comments_disabled: true
   jquery_lib: 'jquery-1.4.4.js'
 
 development:

@@ -40,42 +40,46 @@
     </ul>
   </div>
 <% end %>
-<% if flash[:notice] %>
-  <p class='notice'><%= flash[:notice] %></p>
+<% if comments_disabled? %>
+  <p>Posting comments currently disabled.</p>
 <% else %>
-  <a name='new-comment'></a>
-  <div class='new-comment'>
-    <h2>Post a comment</h2>
-    <%= form_for @comment, :url => '#new-comment' do |form| %>
-      <% if @comment.errors.any? %>
-        <div class="error_explanation">
-          <ul>
-            <% @comment.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
+  <% if flash[:notice] %>
+    <p class='notice'><%= flash[:notice] %></p>
+  <% else %>
+    <a name='new-comment'></a>
+    <div class='new-comment'>
+      <h2>Post a comment</h2>
+      <%= form_for @comment, :url => '#new-comment' do |form| %>
+        <% if @comment.errors.any? %>
+          <div class="error_explanation">
+            <ul>
+              <% @comment.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= form.hidden_field :post_id, :value => @post.id %>
+        <div>
+          <%= form.label :author, 'Name' %>
+          <%= form.text_field :author %>
+        </div>
+        <div>
+          <%= form.label :author_email, 'Email address (will not be published)' %>
+          <%= form.text_field :author_email %>
+        </div>
+        <div>
+          <%= form.label :author_url, 'URL (optional)' %>
+          <%= form.text_field :author_url %>
+        </div>
+        <div>
+          <%= form.label :content, 'Your comment' %>
+          <%= form.text_area :content %>
+        </div>
+        <div>
+          <%= form.submit 'Comment', :class => 'button' %>
         </div>
       <% end %>
-      <%= form.hidden_field :post_id, :value => @post.id %>
-      <div>
-        <%= form.label :author, 'Name' %>
-        <%= form.text_field :author %>
-      </div>
-      <div>
-        <%= form.label :author_email, 'Email address (will not be published)' %>
-        <%= form.text_field :author_email %>
-      </div>
-      <div>
-        <%= form.label :author_url, 'URL (optional)' %>
-        <%= form.text_field :author_url %>
-      </div>
-      <div>
-        <%= form.label :content, 'Your comment' %>
-        <%= form.text_area :content %>
-      </div>
-      <div>
-        <%= form.submit 'Comment', :class => 'button' %>
-      </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 <% end %>

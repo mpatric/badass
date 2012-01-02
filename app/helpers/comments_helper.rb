@@ -11,4 +11,8 @@ module CommentsHelper
     description = [not_junk_count.to_s, junk_count.to_s].join(' + ')
     post.comments.count == 0 ? '0' : link_to("#{description}", admin_comments_path(:post_id => post.id))
   end
+  
+  def comments_disabled?
+    APP_CONFIG.comments_disabled || false
+  end
 end
