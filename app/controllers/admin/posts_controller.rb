@@ -56,7 +56,7 @@ class Admin::PostsController < ApplicationController
       old_tags = @post.tags.collect(&:id).sort
       @post.attributes = params[:post].merge({:tags => parse_tag_ids(params[:tag_ids])})
       new_tags = @post.tags.collect(&:id).sort
-      did_change = @post.changed?
+      did_change = @post.change_to_bump_version?
       @post.version_draft += 1 if did_change
       updates = []
       updates << 'post' if did_change

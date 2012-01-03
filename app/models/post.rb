@@ -76,7 +76,11 @@ class Post < ActiveRecord::Base
     true
   end
   
-  private  
+  def change_to_bump_version?
+    self.changed? and (self.content_draft_changed? or self.title_draft_changed?)
+  end
+  
+  private
     def generate_permalink
       return unless self.permalink.blank?
       return if self.date.blank? or self.title_draft.blank?
