@@ -36,6 +36,9 @@
       <label>Version:</label><%= @post.version_draft %>
     </span>
     <span>
+      <label>Comments open:</label><%= @post.comments_open? ? 'Yes' : 'No' %>
+    </span>
+    <span>
       <label>Comments:</label><%= comment_count_link(@post) %>
     </span>
     <span>

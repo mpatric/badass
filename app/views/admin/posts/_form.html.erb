@@ -28,6 +28,10 @@
   <%= form.text_field :permalink %>
 </div>
 <div>
+  <%= form.label :comments_open, 'Comments' %>
+  <%= form.check_box :comments_open %> Open
+</div>
+<div>
   <%= form.label :content_draft, 'Content' %>
   <%= form.text_area :content_draft, :id => 'markItUp' %>
 </div>

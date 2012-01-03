@@ -19,6 +19,7 @@
         <th>Title</th>
         <th>Tags</th>
         <th>Posted by</th>
+        <th>Comments open</th>
         <th>Comments</th>
       </tr>
       <% @posts.each do |post| %>
@@ -45,6 +46,7 @@
             <% end %>
           </td>
           <td><%= post.user.name %></td>
+          <td><%= post.comments_open? ? 'Yes' : 'No' %></td>
           <td><%= comment_count_link(post) %></td>
         </tr>
       <% end %>

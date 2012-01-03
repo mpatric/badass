@@ -14,6 +14,7 @@ module Badass
       generate_migration('create_assets')
       generate_migration('create_tags')
       generate_migration('create_posts_tags')
+      generate_migration('add_comments_open_to_posts')
     end
     
     private
