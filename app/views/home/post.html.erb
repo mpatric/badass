@@ -40,8 +40,8 @@
     </ul>
   </div>
 <% end %>
-<% if comments_disabled? %>
-  <p>Posting comments currently disabled.</p>
+<% if comments_disabled? or !@post.comments_open? %>
+    <p class='closed-for-comments'>Post closed for comments</p>
 <% else %>
   <% if flash[:notice] %>
     <p class='notice'><%= flash[:notice] %></p>

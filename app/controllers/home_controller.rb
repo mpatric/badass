@@ -26,8 +26,12 @@ class HomeController < ApplicationController
       @all_posts = Post.published.by_last_published.select{ |p| !(p.tags & @post.tags).empty? }.reject{ |p| p == @post }
       if !params[:comment]
         @comment = Comment.new
-      elsif APP_CONFIG.comments_disabled
-        render_404
+      elsif APP_CONFIG.comments_disabled or !@post.comments_open?
+        if @post.published?
+          redirect_to(@post.permalink_url)
+        else
+          render_404
+        end
         return
       else
         # create comment
