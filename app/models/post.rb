@@ -84,7 +84,7 @@ class Post < ActiveRecord::Base
     def generate_permalink
       return unless self.permalink.blank?
       return if self.date.blank? or self.title_draft.blank?
-      self.permalink = "#{self.date.strftime('%Y-%m-%d')}-#{title_draft.downcase.gsub(/[^A-Za-z0-9 ]/, '').gsub(' ', '-')}"
+      self.permalink = "#{self.date.strftime('%Y-%m-%d')}-#{title_draft.downcase.gsub(/[^A-Za-z0-9 \-]/, '').gsub(/( |-)+/, '-')}"
     end
     
     def check_permalink
