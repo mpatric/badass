@@ -4,6 +4,7 @@
   </div>
   <%= @post.content_html %>
   <div class='tagline'>
+    <%= render :partial => 'twitter_button' %>
     <%= image_tag @post.avatar_url(request.host, request.port) %>
     <p>
       <%= posted_at(@post) %> <%= posted_by(@post) %><%= ", " + updated_at(@post, false) unless @post.last_published_at == @post.first_published_at %>
