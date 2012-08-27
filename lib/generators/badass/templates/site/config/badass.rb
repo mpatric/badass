@@ -12,6 +12,7 @@ common:
   akismet_api_key:
   twitter_enabled: true
   twitter_cache_time: 600
+  facebook_enabled: true
   google_analytics_enabled: false
   google_analytics_id:
   google_site_verification:

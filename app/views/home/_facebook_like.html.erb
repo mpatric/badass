@@ -1,0 +1,14 @@
+<% if APP_CONFIG.facebook_enabled %>
+  <div class='facebook_button'>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+  
+    <div class="fb-like" data-href="<%= @post.full_permalink_url %>" data-send="false" data-layout="button_count" data-width="107" data-show-faces="false"></div>
+  </div>
+<% end %>
