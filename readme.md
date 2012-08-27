@@ -132,7 +132,6 @@ Things that might be added in the future:
 -   Additional 'themes' out of the box
 -   Validate email address on comment entry
 -   Caching
--   Better Twitter integration: tweet this post, with tweet count
 -   Trackbacks
 -   Pingbacks
 -   Email followup comments to other commenters, with unsubscribe functionality
