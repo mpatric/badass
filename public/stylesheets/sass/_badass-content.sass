@@ -15,7 +15,6 @@ article.post, div.post, div.comment
   :font-weight normal
   :margin 0
   :padding 0
-  :overflow wrap
   h1, h2, h3, h4, h5, h6
     :letter-spacing 0.2em
     :font-weight normal
@@ -90,20 +89,25 @@ article.post, div.post, div.comment
   code
     :font-size 12px
     :font-family monospace
-    :color $mygreen
+    :color white
 
   pre
     :padding 10px
     :background-color #111
     :display inline-block
     :border-radius 12px
-    :overflow wrap
     :width 684px
     :-moz-border-radius 12px
     :-webkit-border-radius 12px
+    :overflow auto
 
   span.caption
     :font-size 80%
+
+div.comment pre
+  :background transparent
+  :margin 0
+  :width 100%
 
 div.posts
   div.post

@@ -6,6 +6,7 @@
   <title><%= controller.action_name %> <%= controller.controller_name %> - blog admin</title>
   <%= stylesheet_link_tag 'admin' %>
   <%= stylesheet_link_tag 'content' %>
+  <%= stylesheet_link_tag 'prettify' %>
   <%= stylesheet_link_tag '/markitup/skins/simple/style.css' %>
   <%= stylesheet_link_tag '/markitup/sets/badass/style.css' %>
   <%= javascript_include_tag APP_CONFIG.jquery_lib %>
@@ -15,7 +16,7 @@
   <%= javascript_include_tag src='/markitup/sets/badass/set.js' %>
   <%= csrf_meta_tag %>
 </head>
-<body>
+<body onload="prettyPrint()">
 <h1>Blog Admin</h1>
 <div id='title-bar'>
   <% if current_user %>
@@ -45,4 +46,5 @@
 <% end %>
 <%= yield  %>
 </body>
+<%= javascript_include_tag '/javascripts/prettify.js' %>
 </html>
