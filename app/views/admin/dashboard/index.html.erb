@@ -24,8 +24,9 @@
       <td>Total</td>
       <td>
         <%= pluralize Post.count, "post" %>
-        (<%= pluralize Post.outdated.count, "outdated post" %>,
-        <%= pluralize Post.unpublished.count, "unpublished post" %>)
+        (<%= Post.current.count %> current,
+        <%= Post.outdated.count %> outdated,
+        <%= Post.unpublished.count %> unpublished)
       </td>
     </tr>
     <tr class="<%= cycle('dark', 'light') %>">
@@ -55,14 +56,16 @@
       <td>Posted in the last 30 days</td>
       <td>
         <%= pluralize Comment.since(Time.now - 30.days).count, "comment" %>
-        (<%= pluralize Comment.since(Time.now - 30.days).junk.count, "junk comment" %>)
+        (<%= Comment.since(Time.now - 30.days).not_junk.count %> not junk,
+        <%= Comment.since(Time.now - 30.days).junk.count %> junk)
       </td>
     </tr>
     <tr class="<%= cycle('dark', 'light') %>">
       <td>Posted in the last 7 days</td>
       <td>
         <%= pluralize Comment.since(Time.now - 7.days).count, "comment" %>
-        (<%= pluralize Comment.since(Time.now - 7.days).junk.count, "junk comment" %>)
+        (<%= Comment.since(Time.now - 7.days).not_junk.count %> not junk,
+        <%= Comment.since(Time.now - 7.days).junk.count %> junk)
       </td>
     </tr>
   </table>
