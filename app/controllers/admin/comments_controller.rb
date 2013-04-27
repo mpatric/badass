@@ -97,6 +97,13 @@ class Admin::CommentsController < ApplicationController
     flash[:error] = 'No valid comments selected' if count == 0
     redirect_to(admin_comments_path)
   end
+
+  def clear_junk
+    comments_ids = Comment.where(:junk => true).map(&:id)
+    Comment.delete(comments_ids)
+    flash[:notice] = "#{comments_ids.count} junk comment#{comments_ids.count == 1 ? '' : 's'} deleted"
+    redirect_to admin_dashboard_index_path
+  end
   
   private
     def check_access(comment, action)

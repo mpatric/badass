@@ -1,5 +1,5 @@
 <h2>Dashboard</h2>
-<fieldset class='admin'>
+<fieldset class='admin users'>
   <table>
     <tr>
       <th colspan='2'>Users</th>
@@ -12,7 +12,11 @@
       <td>Currently logged in</td>
       <td><%= pluralize User.logged_in.count, "user" %></td>
     </tr>
-    
+  </table>
+</fieldset>
+
+<fieldset class='admin posts'>
+  <table>
     <tr>
       <th colspan='2'>Posts</th>
     </tr>
@@ -32,7 +36,11 @@
       <td>Published or updated in the last 7 days</td>
       <td><%= pluralize Post.published.since(Time.now - 7.days).count, "post" %></td>
     </tr>
-    
+  </table>
+</fieldset>
+
+<fieldset class='admin comments'>
+  <table>
     <tr>
       <th colspan='2'>Comments</th>
     </tr>
@@ -58,4 +66,7 @@
       </td>
     </tr>
   </table>
+  <div class='bulk-actions'>
+    <%= button_with_confirmation(clear_junk_path, 'clear junk', 'Are you sure you want to delete ALL junk comments?', 'delete') %>
+  </div>
 </fieldset>

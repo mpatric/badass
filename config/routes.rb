@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  match '/admin/comments/clear_junk' => "admin/comments#clear_junk", :as => :clear_junk
+
   namespace :admin do
     resource :profile, :controller => 'users'
     resource :user_session, :only => :create
@@ -25,7 +27,7 @@ Rails.application.routes.draw do
   match '/logout' => 'admin/user_sessions#destroy'
   
   match '/admin' => redirect('/admin/dashboard')
-  
+
   match '/posts.:format' => 'home#posts', :format => 'atom'
   match '/comments.:format', :controller => 'home', :action => 'comments', :format => 'atom'
   
