@@ -35,8 +35,8 @@
     <div class='actions'>
       <%= button(admin_comments_path(:post_id => @comment.post.id), '&laquo; Comments'.html_safe) %>
       <%= button(edit_admin_comment_path(@comment), 'Edit') %>
-      <%= button_with_confirmation(admin_comment_notjunk_path(@comment), 'Not junk', 'Are you sure this comment is not junk?') if @comment.junk? %>
-      <%= button_with_confirmation(admin_comment_junk_path(@comment), 'Junk', 'Are you sure this comment is junk?') unless @comment.junk? %>
+      <%= button_with_confirmation(admin_comment_notjunk_path(@comment), 'Not junk', 'Are you sure this comment is not junk?', 'post') if @comment.junk? %>
+      <%= button_with_confirmation(admin_comment_junk_path(@comment), 'Junk', 'Are you sure this comment is junk?', 'post') unless @comment.junk? %>
       <%= button_with_confirmation(admin_comment_path(@comment), 'Delete', 'Are you sure you want to delete this comment?', 'delete') %>
     </div>
   </div>

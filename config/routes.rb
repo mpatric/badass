@@ -3,14 +3,14 @@ Rails.application.routes.draw do
     resource :profile, :controller => 'users'
     resource :user_session, :only => :create
     resources :posts do
-      get :publish
-      get :quietly_publish
-      get :revert
-      get :takedown
+      post :publish
+      post :quietly_publish
+      post :revert
+      post :takedown
     end
     resources :comments do
-      get :junk
-      get :notjunk
+      post :junk
+      post :notjunk
       collection do
         post :bulk_action
       end
