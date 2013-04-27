@@ -49,7 +49,8 @@
       <td>Total</td>
       <td>
         <%= pluralize Comment.count, "comment" %>
-        (<%= pluralize Comment.junk.count, "junk comment" %>)
+        (<%= Comment.not_junk.count %> not junk,
+        <%= Comment.junk.count %> junk)
       </td>
     </tr>
     <tr class="<%= cycle('dark', 'light') %>">
