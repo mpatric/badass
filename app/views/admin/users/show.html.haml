@@ -1,0 +1,38 @@
+%h2 Profile
+%fieldset.admin
+  .show
+    %span
+      %label Login:
+      = @user.login
+    %span
+      %label Name:
+      = @user.name
+    %span
+      %label Email:
+      = link_to(@user.email, "mailto:#{@user.email}") if @user.email
+    %span
+      %label Url:
+      = link_to(@user.url, @user.url) if @user.url
+    %span
+      %label Twitter name:
+      = link_to(@user.twitter_name, @user.twitter_url) if @user.twitter_url
+    %span
+      %label Login count:
+      = @user.login_count
+    %span
+      %label Last request at:
+      = format_timestamp(@user.last_request_at)
+    %span
+      %label Last login at:
+      = format_timestamp(@user.last_login_at)
+    %span
+      %label Current login at:
+      = format_timestamp(@user.current_login_at)
+    %span
+      %label Last login ip:
+      = @user.last_login_ip
+    %span
+      %label Current login ip:
+      = @user.current_login_ip
+    .actions
+      = button_to 'Edit', edit_admin_profile_path, :method => :get

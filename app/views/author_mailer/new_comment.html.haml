@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %p
+      %i= @comment.author
+      has made a
+      \#{link_to 'comment', @comment.full_permalink_url}
+      on the post titled
+      = succeed ":" do
+        %i= @comment.post.title
+    - if @comment.junk?
+      %p
+        %b This comment appears to be spam and has been marked as JUNK
+    %p
+      = @comment.content_html

@@ -1,0 +1,33 @@
+!!!
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %meta{:content => @post.user.name, :name => "author"}/
+    %meta{:content => keywords(@post), :name => "keywords"}/
+    %meta{:content => @post.title || @post.title_draft, :name => "description"}/
+    %title
+      = @post.title || @post.title_draft
+      \- #{APP_CONFIG.blog_title}
+    - if @post.published?
+      %link{:href => posts_feed_url, :rel => "alternate", :title => posts_feed_title, :type => "application/atom+xml"}/
+      %link{:href => comments_feed_url, :rel => "alternate", :title => comments_feed_title, :type => "application/atom+xml"}/
+      %link{:href => comments_feed_url(@post), :rel => "alternate", :title => comments_feed_title(@post), :type => "application/atom+xml"}/
+    = stylesheet_link_tag 'site'
+    = stylesheet_link_tag 'content'
+    = stylesheet_link_tag 'prettify'
+    = javascript_include_tag APP_CONFIG.jquery_lib
+    = javascript_include_tag '/javascripts/badass.js'
+    = javascript_include_tag '/javascripts/application.js'
+    = csrf_meta_tag
+    = render :partial => 'analytics'
+  %body{:onload => "prettyPrint()"}
+    .main-wrapper
+      .main
+        %h1= link_to APP_CONFIG.blog_title, '/'
+        = yield
+      .sidebar
+        = render :partial => 'tags'
+        = render :partial => 'contents'
+        = render :partial => 'tweets'
+        = render :partial => 'powered'
+      = javascript_include_tag '/javascripts/prettify.js'

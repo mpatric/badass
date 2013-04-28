@@ -1,0 +1,15 @@
+%h2 Login
+%fieldset.admin
+  = form_for @user_session, :url => admin_user_session_path do |form|
+    = render :partial => '/admin/errors', :locals => { :errors => @user_session.errors }
+    %div
+      = form.label :login
+      = form.text_field :login
+    %div
+      = form.label :password
+      = form.password_field :password
+    %div
+      = form.check_box :remember_me, :class => 'button'
+      Remember me
+    .actions
+      = form.submit "Login", :class => 'button'

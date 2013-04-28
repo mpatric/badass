@@ -1,0 +1,9 @@
+%article.post
+  %h2= @post.title_draft
+  = @post.content_draft_html
+  .tagline
+    %ul
+      %li= "Posted #{format_timestamp_relative(@post.first_published_at)} by #{@post.user.name}"
+      - if @post.last_published_at != @post.first_published_at
+        %li= "Updated #{format_timestamp_relative(@post.last_published_at)}"
+      %li= posted_in_tags(@post)

@@ -1,0 +1,8 @@
+%h2 Edit Profile
+%fieldset.admin
+  = form_for @user, :url => admin_profile_path do |form|
+    = render :partial => '/admin/errors', :locals => { :errors => @user.errors }
+    = render :partial => 'form', :object => form
+    .actions
+      = form.submit 'Update', :class => 'button', :name => 'update'
+      = form.submit 'Cancel', :class => 'button', :name => 'cancel'

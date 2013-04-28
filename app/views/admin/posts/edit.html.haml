@@ -1,0 +1,9 @@
+%h2
+  Edit post #{@post.id}
+%fieldset.admin
+  = form_for @post, :url => admin_post_path(@post) do |form|
+    = render :partial => '/admin/errors', :locals => { :errors => @post.errors }
+    = render :partial => 'form', :object => form
+    .actions
+      = form.submit 'Update', :class => 'button', :name => 'update'
+      = form.submit 'Cancel', :class => 'button', :name => 'cancel'

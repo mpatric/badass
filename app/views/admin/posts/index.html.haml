@@ -1,0 +1,41 @@
+= link_to('New post', new_admin_post_path, :class => 'new')
+%h2 Posts
+%fieldset.admin
+  = will_paginate @posts
+  = form_tag(admin_posts_path, :method => 'get', :class => 'filters') do
+    Tag
+    \#{select_tag(:tag_id, options_for_select([["All (#{Post.count})", nil]] + @tags.collect{|t| ["#{t.label} (#{t.posts.count})", t.id]}, @tag.nil? ? nil : @tag.id))}
+    Status
+    \#{select_tag(:publish_status, options_for_select([["All (#{@counts[:all]})", 'all'], ["Current (#{@counts[:current]})", 'current'], ["Outdated (#{@counts[:outdated]})", 'outdated'], ["Unpublished (#{@counts[:unpublished]})", 'unpublished']], @publish_status))}
+    \#{submit_tag 'filter'}
+  - if @posts.empty?
+    No posts yet
+  - else
+    %table#posts
+      %tr
+        %th Date
+        %th Version
+        %th Title
+        %th Tags
+        %th Posted by
+        %th Comments open
+        %th Comments
+      - @posts.each do |post|
+        %tr{:class => "#{cycle('dark', 'light')}#{" not-author" if post.user != @current_user}"}
+          %td= format_date(post.date)
+          %td
+            #publish-info
+              %span{:class => "summary #{post.status}"}= post.version_draft
+          %td
+            %span.permalink
+              = link_to(image_tag('/images/permalink.png', :title => 'permalink'), post.permalink_url) if post.permalink_url
+            = link_to(post.title_draft, admin_post_path(post))
+          %td
+            - unless post.tags.empty?
+              %ul.tags
+                - post.tags.by_label.each do |tag|
+                  %li= link_to(tag.label, admin_tag_path(tag))
+          %td= post.user.name
+          %td= post.comments_open? ? 'Yes' : 'No'
+          %td= comment_count_link(post)
+    = will_paginate @posts

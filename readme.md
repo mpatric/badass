@@ -78,7 +78,7 @@ If you are setting up a personal blog, you'll probably want to leave max_users f
 
 ## Views
 
-If you want some information to appear on the top-right of the page (typically information about yourself), edit the partial /app/views/home/_about.html.erb
+If you want some information to appear on the top-right of the page (typically information about yourself), edit the partial /app/views/home/_about.html.haml
 
 You can replace any of the views provided by the engine by providing the same view in your app. The easiest way to do this is to copy a view from the app/views folder in the badass gem to the same path in your project, then edit yours.
 

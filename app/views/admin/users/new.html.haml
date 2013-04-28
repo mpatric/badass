@@ -1,0 +1,7 @@
+%h2 Register
+%fieldset.admin
+  = form_for @user, :url => admin_profile_path do |form|
+    = render :partial => '/admin/errors', :locals => { :errors => @user.errors }
+    = render :partial => 'form', :object => form
+    .actions
+      = form.submit 'Register', :class => 'button'

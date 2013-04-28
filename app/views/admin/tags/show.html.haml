@@ -1,0 +1,18 @@
+= link_to('New tag', new_admin_tag_path, :class => 'new')
+%h2
+  Tag #{@tag.id}
+%fieldset.admin
+  .show
+    %span
+      %label Label:
+      = @tag.label
+    %span
+      %label Posts:
+      = @tag.posts.count
+    %span
+      %label Permalink:
+      = link_to "tag/#{@tag.permalink}", @tag.permalink_url
+    .actions
+      = button(admin_tags_path, '« Tags'.html_safe)
+      = button(edit_admin_tag_path(@tag), 'Edit')
+      = button_with_confirmation(admin_tag_path(@tag), 'Delete', 'Are you sure you want to delete this tag?', 'delete')

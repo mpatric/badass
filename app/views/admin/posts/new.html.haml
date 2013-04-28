@@ -1,0 +1,7 @@
+%h2 New post
+%fieldset.admin
+  = form_for @post, :url => admin_posts_path do |form|
+    = render :partial => '/admin/errors', :locals => { :errors => @post.errors }
+    = render :partial => 'form', :object => form
+    .actions
+      = form.submit 'Create', :class => 'button'

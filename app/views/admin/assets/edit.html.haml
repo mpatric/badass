@@ -1,0 +1,12 @@
+%h2
+  Edit asset #{@asset.id}
+%fieldset.admin
+  = form_for @asset, :url => admin_asset_path(@asset), :html => { :multipart => true } do |form|
+    = render :partial => '/admin/errors', :locals => { :errors => @asset.errors }
+    = form.hidden_field :user_id, :value => @user.id
+    %div
+      = form.label :title
+      = form.text_field :title
+    .actions
+      = form.submit 'Update', :class => 'button', :name => 'update'
+      = form.submit 'Cancel', :class => 'button', :name => 'cancel'

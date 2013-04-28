@@ -1,0 +1,14 @@
+- $twitter ||= Twitter.instance
+- tweets = $twitter.tweets
+- if tweets and tweets.any?
+  .tweets
+    %h3 Recent tweets
+    - tweets[0..4].each do |tweet|
+      .tweet
+        .text
+          = link_to tweet.name, tweet.user_url
+          \: #{tweet.text}
+        %span.timestamp
+          = format_timestamp_relative(tweet.timestamp)
+          = link_to 'link', tweet.url
+          = link_to 'reply', tweet.reply_url

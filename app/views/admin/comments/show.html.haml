@@ -1,0 +1,43 @@
+%h2
+  Comment #{@comment.id}
+%fieldset.admin
+  .show
+    .junk-stamp
+      = image_tag('/images/junk.png') if @comment.junk?
+    %span
+      %label Date:
+      = format_timestamp(@comment.created_at)
+    %span
+      %label Author:
+      = @comment.author
+    %span
+      %label Author Email:
+      = link_to(@comment.author_email, 'mailto:' + @comment.author_email)
+    %span
+      %label Author Url:
+      = link_to(@comment.author_url, @comment.author_url) unless @comment.author_url.blank?
+    %span
+      %label User IP:
+      = @comment.user_ip
+    %span
+      %label User Agent:
+      = @comment.user_agent
+    %span
+      %label Referrer:
+      = link_to(@comment.referrer, @comment.referrer) unless @comment.referrer.blank?
+    %span
+      %label Post:
+      = link_to(@comment.post.title_draft, admin_post_path(@comment.post))
+    %span
+      %label Permalink:
+      = link_to @comment.permalink, @comment.permalink_url if @comment.permalink_url
+      = @comment.permalink unless @comment.permalink_url
+    .actions
+      = button(admin_comments_path(:post_id => @comment.post.id), '« Comments'.html_safe)
+      = button(edit_admin_comment_path(@comment), 'Edit')
+      = button_with_confirmation(admin_comment_notjunk_path(@comment), 'Not junk', 'Are you sure this comment is not junk?', 'post') if @comment.junk?
+      = button_with_confirmation(admin_comment_junk_path(@comment), 'Junk', 'Are you sure this comment is junk?', 'post') unless @comment.junk?
+      = button_with_confirmation(admin_comment_path(@comment), 'Delete', 'Are you sure you want to delete this comment?', 'delete')
+%fieldset.content
+  .comment
+    = @comment.content_html

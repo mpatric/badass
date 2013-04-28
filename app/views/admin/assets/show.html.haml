@@ -1,0 +1,36 @@
+= link_to('New asset', new_admin_asset_path, :class => 'new')
+%h2
+  Asset #{@asset.id}
+%fieldset.admin
+  .show
+    %span
+      %label Title:
+      = @asset.title
+    %span
+      %label Filename:
+      = @asset.upload_file_name
+    %span
+      %label Content type:
+      = @asset.upload_content_type
+    %span
+      %label Size:
+      = number_with_delimiter(@asset.upload_file_size)
+    %span
+      %label URL:
+      = link_to(@asset.url.split('?')[0], @asset.url)
+    %span
+      %label Uploaded by:
+      = @asset.user.name
+    %span
+      %label Created at:
+      = format_timestamp(@asset.created_at)
+    %span
+      %label Updated at:
+      = format_timestamp(@asset.updated_at)
+    %span
+      %label Thumbnail:
+    .thumbnail= link_to(image_tag(@asset.thumbnail_url), @asset.url) if @asset.url
+    .actions
+      = button(admin_assets_path, '« Assets'.html_safe)
+      = button(edit_admin_asset_path(@asset), 'Edit')
+      = button_with_confirmation(admin_asset_path(@asset), 'Delete', 'Are you sure you want to delete this asset?', 'delete')

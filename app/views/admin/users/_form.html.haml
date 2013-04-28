@@ -1,0 +1,21 @@
+%div
+  = form.label :login
+  = form.text_field :login
+%div
+  = form.label :password, form.object.new_record? ? nil : 'Change password'
+  = form.password_field :password
+%div
+  = form.label :password_confirmation
+  = form.password_field :password_confirmation
+%div
+  = form.label :name
+  = form.text_field :name
+%div
+  = form.label :email
+  = form.text_field :email
+%div
+  = form.label :url
+  = form.text_field :url
+%div
+  = form.label :twitter_name
+  = form.text_field :twitter_name

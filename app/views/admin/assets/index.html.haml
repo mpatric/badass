@@ -1,0 +1,25 @@
+= link_to('New asset', new_admin_asset_path, :class => 'new')
+%h2 Assets
+%fieldset.admin
+  = will_paginate @assets
+  - if @assets.empty?
+    No assets yet
+  - else
+    - unless @assets.empty?
+      %table
+        %tr
+          %th Thumbnail
+          %th Title
+          %th Url
+          %th Content type
+          %th Size
+          %th Uploaded by
+        - @assets.each do |asset|
+          %tr{:class => "#{cycle('dark', 'light')}#{" not-author" if asset.user != @current_user}"}
+            %td.thumbnail= link_to(image_tag(asset.thumbnail_url), asset.url) if asset.url
+            %td= link_to(asset.title, admin_asset_path(asset))
+            %td= asset.url.split('?')[0]
+            %td= asset.upload_content_type
+            %td= number_with_delimiter(asset.upload_file_size)
+            %td= asset.user.name
+      = will_paginate @assets

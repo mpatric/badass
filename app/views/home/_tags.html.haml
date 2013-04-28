@@ -1,0 +1,8 @@
+- if !@all_tags.nil? and @all_tags.any?
+  .tags
+    %h3 All tags
+    %ul
+      - @all_tags.each do |tag|
+        - unless tag == @tag
+          %li
+            = link_to tag.label, tag.permalink_url

@@ -1,0 +1,14 @@
+- if !@all_posts.nil? and @all_posts.any?
+  .contents
+    - unless @tag
+      - unless @post
+        %h3 All posts
+      - else
+        %h3 Possibly related posts
+    - else
+      %h3
+        Posts in #{@tag.label}
+    %ul
+      - @all_posts.each do |post|
+        %li
+          = link_to post.title, post.permalink_url

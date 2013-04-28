@@ -1,0 +1,28 @@
+:javascript
+  $(document).ready(function() {
+     $("#markItUp").markItUp(mySettings);
+  });
+= form.hidden_field :user_id, :value => @user.id
+%div
+  = form.label :title_draft, 'Title'
+  = form.text_field :title_draft
+- if Tag.count > 0
+  %div
+    = form.label :tags
+    - Tag.by_label.each do |tag|
+      .tag
+        = check_box_tag "tag_ids[#{tag.id}]", 1, form.object.tags.include?(tag)
+        = tag.label
+%div
+  = form.label :date
+  = form.text_field :date
+%div
+  = form.label :permalink, 'Permalink [leave blank to auto-generate]'
+  = form.text_field :permalink
+%div
+  = form.label :comments_open, 'Comments'
+  = form.check_box :comments_open
+  Open
+%div
+  = form.label :content_draft, 'Content'
+  = form.text_area :content_draft, :id => 'markItUp'

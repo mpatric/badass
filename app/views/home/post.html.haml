@@ -1,0 +1,63 @@
+%article.post
+  .titlebar
+    %h2= link_to @post.title, @post.permalink_url
+  = @post.content_html
+  .tagline
+    .sharing
+      = render :partial => 'twitter_button'
+      = render :partial => 'facebook_like'
+    = image_tag @post.avatar_url(request.host, request.port)
+    %p
+      = posted_at(@post)
+      = posted_by(@post)
+      = ", " + updated_at(@post, false) unless @post.last_published_at == @post.first_published_at
+    %p
+      = posted_in_tags(@post)
+%a{:name => "comments"}
+- unless @post.comments.not_junk.empty?
+  .comments
+    %h2 Comments
+    %ul
+      - @post.comments.not_junk.by_date_ascending.each_with_index do |comment,i|
+        %a{:name => comment.id}
+        %li
+          .avatar
+            = image_tag comment.avatar_url(request.host, request.port), :alt => '', :title => ''
+          .comment
+            .content
+              = comment.content_html
+            .header
+              = comment.author if comment.author_url.blank?
+              = link_to(comment.author, comment.author_url) unless comment.author_url.blank?
+              commented
+              %a{:href => comment.permalink_url}= format_timestamp_relative(comment.created_at)
+- if comments_disabled? or !@post.comments_open?
+  %p.closed-for-comments Post closed for comments
+- else
+  - if flash[:notice]
+    %p.notice= flash[:notice]
+  - else
+    %a{:name => "new-comment"}
+    .new-comment
+      %h2 Post a comment
+      = form_for @comment, :url => '#new-comment' do |form|
+        - if @comment.errors.any?
+          .error_explanation
+            %ul
+              - @comment.errors.full_messages.each do |msg|
+                %li= msg
+        = form.hidden_field :post_id, :value => @post.id
+        %div
+          = form.label :author, 'Name'
+          = form.text_field :author
+        %div
+          = form.label :author_email, 'Email address (will not be published)'
+          = form.text_field :author_email
+        %div
+          = form.label :author_url, 'URL (optional)'
+          = form.text_field :author_url
+        %div
+          = form.label :content, 'Your comment'
+          = form.text_area :content
+        %div
+          = form.submit 'Comment', :class => 'button'

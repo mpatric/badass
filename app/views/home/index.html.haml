@@ -1,0 +1,21 @@
+- if @tag
+  %h2= @tag.label
+- if @posts.empty?
+  No posts
+- else
+  .posts
+    - @posts.each do |post|
+      .post
+        .titlebar
+          %h2= link_to post.title, post.permalink_url
+        .tagline
+          = posted_or_updated_at_with_author(post)
+          ,
+          \#{link_to comment_count_description(post), "#{post.permalink_url}#comments"}
+        .content
+          = post.content_short_html
+        - if post.content_shortened?
+          .more
+            = link_to 'read more &raquo;'.html_safe, post.permalink_url
+  .home-pagination
+    = home_paginate @posts

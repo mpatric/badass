@@ -1,9 +1,9 @@
 # delete unnecessary files
-# run "rm public/index.html"
-# run "rm app/views/layouts/application.html.erb"
-# run "rm public/favicon.ico"
-# run "rm public/images/rails.png"
-# run "rm public/javascripts/application.js"
+run "rm public/index.html"
+run "rm app/views/layouts/application.html.erb"
+run "rm public/favicon.ico"
+run "rm public/images/rails.png"
+run "rm public/javascripts/application.js"
 
 # create gemfile
 run "rm Gemfile"
@@ -24,8 +24,8 @@ run "bundle"
 # run 'wheneverize .'
 
 # capify
-# run 'capify .'
-# run 'rm config/deploy.rb'
+run 'capify .'
+run 'rm config/deploy.rb'
 
 run 'rm .gitignore'
 

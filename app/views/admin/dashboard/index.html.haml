@@ -1,0 +1,52 @@
+%h2 Dashboard
+%fieldset.admin.users
+  %table
+    %tr
+      %th{:colspan => "2"} Users
+    %tr{:class => cycle('dark', 'light')}
+      %td Registered
+      %td= pluralize User.count, "user"
+    %tr{:class => cycle('dark', 'light')}
+      %td Currently logged in
+      %td= pluralize User.logged_in.count, "user"
+%fieldset.admin.posts
+  %table
+    %tr
+      %th{:colspan => "2"} Posts
+    %tr{:class => cycle('dark', 'light')}
+      %td Total
+      %td
+        = pluralize Post.count, "post"
+        (#{Post.current.count} current,
+        \#{Post.outdated.count} outdated,
+        \#{Post.unpublished.count} unpublished)
+    %tr{:class => cycle('dark', 'light')}
+      %td Published or updated in the last 30 days
+      %td= pluralize Post.published.since(Time.now - 30.days).count, "post"
+    %tr{:class => cycle('dark', 'light')}
+      %td Published or updated in the last 7 days
+      %td= pluralize Post.published.since(Time.now - 7.days).count, "post"
+%fieldset.admin.comments
+  %table
+    %tr
+      %th{:colspan => "2"} Comments
+    %tr{:class => cycle('dark', 'light')}
+      %td Total
+      %td
+        = pluralize Comment.count, "comment"
+        (#{Comment.not_junk.count} not junk,
+        \#{Comment.junk.count} junk)
+    %tr{:class => cycle('dark', 'light')}
+      %td Posted in the last 30 days
+      %td
+        = pluralize Comment.since(Time.now - 30.days).count, "comment"
+        (#{Comment.since(Time.now - 30.days).not_junk.count} not junk,
+        \#{Comment.since(Time.now - 30.days).junk.count} junk)
+    %tr{:class => cycle('dark', 'light')}
+      %td Posted in the last 7 days
+      %td
+        = pluralize Comment.since(Time.now - 7.days).count, "comment"
+        (#{Comment.since(Time.now - 7.days).not_junk.count} not junk,
+        \#{Comment.since(Time.now - 7.days).junk.count} junk)
+  .bulk-actions
+    = button_with_confirmation(clear_junk_path, 'clear junk', 'Are you sure you want to delete ALL junk comments?', 'delete')
