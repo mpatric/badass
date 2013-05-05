@@ -102,8 +102,11 @@ input, button
   -moz-border-radius: 4px
 
 input[type=submit], input[type=file], button 
+  cursor: pointer
   border: 1px solid $mybrown
   background-color: #2f251c
+  &:hover
+    background-color: lighten(#2f251c, 10%)
 
 input[type=submit], button 
   box-shadow: 2px 2px 8px black
