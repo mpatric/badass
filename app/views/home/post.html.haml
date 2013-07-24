@@ -56,6 +56,9 @@
         %div
           = form.label :author_url, 'URL (optional)'
           = form.text_field :author_url
+        .title
+          %label Title
+          %input{:id => 'comment_title', :name => 'comment[title]', :size => 30, :type => 'text'}
         %div
           = form.label :content, 'Your comment'
           = form.text_area :content

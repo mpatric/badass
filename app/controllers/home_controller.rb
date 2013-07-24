@@ -38,11 +38,19 @@ class HomeController < ApplicationController
         user_ip = request.env['REMOTE_ADDR']
         user_agent = request.env['HTTP_USER_AGENT']
         referrer = request.env['HTTP_REFERER']
+        title = params[:comment].delete(:title)
         @comment = Comment.new(params[:comment].merge({:user_ip => user_ip, :user_agent => user_agent, :referrer => referrer}))
+        @comment.junk = true unless title.blank? # title is a non-visible field, if it's populated it was by a bot
         if @comment.save
-          AuthorMailer.new_comment(@comment).deliver
-          flash[:notice] = "Thank you for your comment." unless @comment.junk?
-          flash[:notice] = "Thank you for your comment, it will be vetted in due course." if @comment.junk?
+          logger.info "Comment posted with a title: #{title}" unless title.blank?
+          if @comment.post.user.email.present? && (!@comment.junk? || !title.blank?)
+            AuthorMailer.new_comment(@comment).deliver
+          end
+          flash[:notice] = if @comment.junk?
+            "Thank you for your comment, it will be vetted in due course."
+          else
+            "Thank you for your comment."
+          end
           params.delete(:comment)
           redirect_to(@comment.permalink_url)
           return
