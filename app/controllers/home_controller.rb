@@ -43,7 +43,7 @@ class HomeController < ApplicationController
         @comment.junk = true unless title.blank? # title is a non-visible field, if it's populated it was by a bot
         if @comment.save
           logger.info "Comment posted with a title: #{title}" unless title.blank?
-          if @comment.post.user.email.present? && (!@comment.junk? || !title.blank?)
+          if @comment.post.user.email.present? && !@comment.junk?
             AuthorMailer.new_comment(@comment).deliver
           end
           flash[:notice] = if @comment.junk?
