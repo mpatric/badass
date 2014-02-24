@@ -28,7 +28,7 @@
               = comment.content_html
             .header
               = comment.author if comment.author_url.blank?
-              = link_to(comment.author, comment.author_url) unless comment.author_url.blank?
+              = link_to(comment.author, comment.author_url, :rel => 'nofollow') unless comment.author_url.blank?
               commented
               %a{:href => comment.permalink_url}= format_timestamp_relative(comment.created_at)
 - if comments_disabled? or !@post.comments_open?
