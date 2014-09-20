@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    badass (0.4.2)
+    badass (0.4.3)
       authlogic (= 3.0.3)
       aws-s3 (= 0.6.2)
       bluecloth (= 2.0.11)
