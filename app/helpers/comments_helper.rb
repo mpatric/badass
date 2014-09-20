@@ -13,6 +13,6 @@ module CommentsHelper
   end
   
   def comments_disabled?
-    APP_CONFIG.comments_disabled || false
+    (defined? APP_CONFIG and APP_CONFIG.comments_disabled) || false
   end
 end

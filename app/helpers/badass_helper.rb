@@ -2,6 +2,10 @@ module BadassHelper
   include CommentsHelper
   include HomeHelper
   include PostsHelper
+
+  if defined? APP_CONFIG and APP_CONFIG.recaptcha_enabled and !APP_CONFIG.recaptcha_public_key.blank?
+    include Rack::Recaptcha::Helpers
+  end
   
   def format_timestamp(ts, separator=', ')
     return '' unless ts.respond_to?(:strftime)
@@ -69,5 +73,9 @@ module BadassHelper
   def comments_feed_title(post=nil)
     return "Comments feed" if post.nil?
     "Comments feed (#{post.title})"
+  end
+
+  def recaptcha_enabled?
+    defined? APP_CONFIG and APP_CONFIG.recaptcha_enabled and !APP_CONFIG.recaptcha_public_key.blank?
   end
 end

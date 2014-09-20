@@ -19,7 +19,9 @@ class Comment < ActiveRecord::Base
   scope :since, lambda { |date| {:conditions => ['created_at > ?', date] }}
   
   before_create :check_for_spam
-  
+
+  attr_accessor :recaptcha_failed
+
   def content_html
     markdown(self.content)
   end
@@ -67,6 +69,7 @@ class Comment < ActiveRecord::Base
       missing << 'your name' if self.author.blank?
       missing << 'your email address' if self.author_email.blank?
       missing << 'your comment' if self.content.blank?
+      missing << 'the text in the image' if recaptcha_failed
       return if missing.empty?
       if missing.size == 1
         message = missing.first

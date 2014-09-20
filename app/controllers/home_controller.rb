@@ -2,6 +2,8 @@ class HomeController < ApplicationController
   layout 'home'
   
   before_filter :require_user, :only => :preview
+
+  include BadassHelper
   
   def index
     @all_tags = Tag.with_published_posts.by_label.uniq
@@ -41,6 +43,7 @@ class HomeController < ApplicationController
         title = params[:comment].delete(:title)
         @comment = Comment.new(params[:comment].merge({:user_ip => user_ip, :user_agent => user_agent, :referrer => referrer}))
         @comment.junk = true unless title.blank? # title is a non-visible field, if it's populated it was by a bot
+        @comment.recaptcha_failed = true if recaptcha_enabled? and !recaptcha_valid?
         if @comment.save
           logger.info "Comment posted with a title: #{title}" unless title.blank?
           if @comment.post.user.email.present? && !@comment.junk?

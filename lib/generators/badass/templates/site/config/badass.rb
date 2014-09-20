@@ -19,6 +19,9 @@ common:
   max_users: 5
   comments_disabled: true
   jquery_lib: 'jquery-1.4.4.js'
+  recaptcha_enabled: true
+  recaptcha_public_key:
+  recaptcha_private_key:
 
 development:
   domain: 'localhost:3000'
