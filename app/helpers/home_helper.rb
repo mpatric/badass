@@ -1,7 +1,7 @@
 module HomeHelper
   def home_paginate(collection)
     current_page = collection.current_page
-    total_pages = WillPaginate::ViewHelpers.total_pages_for_collection(collection)
+    total_pages = collection.total_pages
     links = []
     if current_page > 1
       links << "<span class='newer-posts'>" + link_to("Newer posts", home_url({'page' => current_page - 1})) + "</span>"

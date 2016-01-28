@@ -76,7 +76,7 @@ class Comment < ActiveRecord::Base
       else
         message = missing[0..-2].join(', ') + ' and ' + missing[-1]
       end
-      errors.add_to_base("Please fill in #{message}")
+      errors[:base] << "Please fill in #{message}"
     end
     
     def check_for_spam

@@ -6,11 +6,11 @@ require 'bluecloth'
 require 'will_paginate'
 require 'gravatar'
 require 'rakismet'
-require 'sass'
+require 'sass/plugin'
 require 'haml'
 require 'paperclip'
 require 'grackle'
-require 'aws/s3'
+require 'aws-sdk'
 require 'nokogiri'
 require 'rack/recaptcha'
 
@@ -28,6 +28,5 @@ module Badass
       ::Sass::Plugin.add_template_location(SASS_PATH, CSS_PATH)
       ActionView::Base.send :include, BadassHelper
     end
-    config.action_mailer.smtp_settings ||= {}
   end
 end
