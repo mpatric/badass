@@ -101,6 +101,7 @@ As of version 0.2, the author of a post can get email notifications when comment
 
 Then make sure you set up the smtp settings for action mailer (usually in config/environment/production.rb). If you are using gmail, these are the settings:
 
+    config.action_mailer.smtp_settings ||= {}
     config.action_mailer.smtp_settings[:address] = 'smtp.gmail.com'
     config.action_mailer.smtp_settings[:port] = 587
     config.action_mailer.smtp_settings[:domain] = ('gmail.com' or your domain if you have a custom gmail domain)
