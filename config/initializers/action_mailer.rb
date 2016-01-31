@@ -7,6 +7,5 @@ if defined? APP_CONFIG and APP_CONFIG.email_enabled
   am_config.smtp_settings ||= {}
   am_config.smtp_settings[:enable_starttls_auto] = true if am_config.smtp_settings[:enable_starttls_auto].nil?
   am_config.smtp_settings[:authentication] ||= :plain
-  am_config.smtp_settings[:tls] = true if am_config.smtp_settings[:tls].nil?
   am_config.smtp_settings[:domain] = APP_CONFIG.domain if am_config.smtp_settings[:domain].nil?
 end
