@@ -4,7 +4,7 @@ module BadassHelper
   include PostsHelper
 
   if defined? APP_CONFIG and APP_CONFIG.recaptcha_enabled and !APP_CONFIG.recaptcha_public_key.blank?
-    include Rack::Recaptcha::Helpers
+    include Recaptcha::ClientHelper
   end
   
   def format_timestamp(ts, separator=', ')

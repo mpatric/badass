@@ -32,5 +32,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency(%q<grackle>, ["~> 0.3.0"])
   s.add_runtime_dependency(%q<aws-sdk>, ["~> 1.5.7"])
   s.add_runtime_dependency(%q<nokogiri>, ["~> 1.6.7"])
-  s.add_runtime_dependency(%q<rack-recaptcha>, ["~> 0.6.6"])
+  s.add_runtime_dependency(%q<recaptcha>, ["~> 4.3.1"])
 end

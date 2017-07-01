@@ -5,7 +5,7 @@ class BadassController < ActionController::Base
   helper_method :current_user_session, :current_user, :host
 
   if defined? APP_CONFIG and APP_CONFIG.recaptcha_enabled and !APP_CONFIG.recaptcha_public_key.blank?
-    include Rack::Recaptcha::Helpers
+    include Recaptcha::Verify
   end
   
   protected

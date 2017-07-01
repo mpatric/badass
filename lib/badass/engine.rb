@@ -12,16 +12,10 @@ require 'paperclip'
 require 'grackle'
 require 'aws-sdk'
 require 'nokogiri'
-require 'rack/recaptcha'
+require 'recaptcha'
 
 module Badass
   class Engine < Rails::Engine
-    initializer 'badass.add_middleware' do |app|
-      if defined? APP_CONFIG and APP_CONFIG.recaptcha_enabled and !APP_CONFIG.recaptcha_public_key.blank?
-        app.gem 'rack-recaptcha', :lib => 'rack/recaptcha'
-        app.middleware.use Rack::Recaptcha, :public_key => APP_CONFIG.recaptcha_public_key, :private_key => APP_CONFIG.recaptcha_private_key
-      end
-    end
     initializer 'badass.load_config', :after => :load_config_initializers do |app|
       CSS_PATH = File.expand_path(File.join(Rails.root, %w[public stylesheets]))
       SASS_PATH = File.join(File.dirname(__FILE__), *%w[.. .. public stylesheets sass])

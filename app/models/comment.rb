@@ -69,28 +69,33 @@ class Comment < ActiveRecord::Base
       missing << 'your name' if self.author.blank?
       missing << 'your email address' if self.author_email.blank?
       missing << 'your comment' if self.content.blank?
-      missing << 'the text in the image' if recaptcha_failed
-      return if missing.empty?
-      if missing.size == 1
-        message = missing.first
+      missing_message = if missing.size > 0
+        "Please fill in " + (missing.size == 1 ? message = missing.first : missing[0..-2].join(', ') + ' and ' + missing[-1])
       else
-        message = missing[0..-2].join(', ') + ' and ' + missing[-1]
+        nil
       end
-      errors[:base] << "Please fill in #{message}"
+
+      if recaptcha_failed
+        message = (missing_message.blank? ? "Please" : "#{missing_message} and") + " confirm you're not a robot"
+      else
+        message = missing_message
+      end
+
+      errors[:base] << message unless message.blank?
     end
-    
+
     def check_for_spam
       self.junk = true if using_askimet? and self.spam?
     end
-    
+
     def using_askimet?
       APP_CONFIG.akismet_enabled and !APP_CONFIG.akismet_api_key.blank?
     end
-    
+
     def markdown(s)
       BlueCloth.new(keep_linebreaks(s)).to_html.html_safe
     end
-    
+
     def keep_linebreaks(s)
       s.gsub("\r\n", "\n").gsub("\r", "\n").gsub("\n\n", "\r\r").gsub("\n", "  \n").gsub("\r\r", "\n\n")
     end

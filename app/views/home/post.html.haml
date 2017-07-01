@@ -63,6 +63,6 @@
           = form.label :content, 'Your comment'
           = form.text_area :content
         - if recaptcha_enabled?
-          = recaptcha_tag(:challenge).html_safe
-        %div
+          = recaptcha_tags
+        .submit
           = form.submit 'Comment', :class => 'button'
