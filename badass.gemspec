@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency(%q<rails>, ["~> 3.2.0"])
-  s.add_runtime_dependency(%q<mysql2>, ["~> 0.4.2"])
+  s.add_runtime_dependency(%q<mysql2>, ["~> 0.5.3"])
   s.add_runtime_dependency(%q<rake>, ["~> 10.5.0"])
   s.add_runtime_dependency(%q<authlogic>, ["~> 3.2.0"])
   s.add_runtime_dependency(%q<bluecloth>, ["~> 2.2.0"])
