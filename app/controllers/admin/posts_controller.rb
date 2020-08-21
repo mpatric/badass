@@ -1,10 +1,10 @@
 class Admin::PostsController < ApplicationController
   layout 'admin'
-  
+
   before_filter :require_user
-  
+
   DEFAULT_PAGE_SIZE = 20
-  
+
   def index
     @tags = Tag.with_posts.by_label.uniq
     @tag = Tag.find(params[:tag_id]) unless params[:tag_id].blank?
@@ -18,50 +18,56 @@ class Admin::PostsController < ApplicationController
     @posts = @posts.paginate(:page => @page, :per_page => @per_page)
     @counts = {:all => all_posts.count, :current => all_posts.current.count, :outdated => all_posts.outdated.count, :unpublished => all_posts.unpublished.count}
   end
-  
+
   def show
     @post = Post.find(params[:id])
   end
-  
+
   def new
     @post = Post.new(:date => Date.today)
     @user = @current_user
   end
-  
+
   def edit
     @post = Post.find(params[:id])
     if check_access(@post, 'edit')
       @user = @current_user
     end
   end
-  
+
   def create
-    @post = Post.new(params[:post].merge({:tags => parse_tag_ids(params[:tag_ids])}))
+    @post = Post.new(post_param)
     @user = User.find(params[:post][:user_id])
     @post.user = @user
     if @post.save
+      @post.tags = parse_tag_ids(params[:tag_ids])
       flash[:notice] = 'Created post'
       redirect_to(admin_post_path(@post))
     else
       render :action => "new"
     end
   end
-  
+
   def update
     @post = Post.find(params[:id])
     @user = User.find(params[:post][:user_id])
     if params[:cancel]
       redirect_to(admin_post_path(@post))
     elsif check_access(@post, 'update')
-      old_tags = @post.tags.collect(&:id).sort
-      @post.attributes = params[:post].merge({:tags => parse_tag_ids(params[:tag_ids])})
-      new_tags = @post.tags.collect(&:id).sort
-      did_change = @post.change_to_bump_version?
-      @post.version_draft += 1 if did_change
       updates = []
-      updates << 'post' if did_change
-      updates << 'tags for post' if old_tags != new_tags
+      @post.attributes = post_param
+      did_change = @post.change_to_bump_version?
+      if did_change
+        @post.version_draft += 1
+        updates << 'post'
+      end
       if @post.save
+        old_tags = @post.tags.collect(&:id).sort
+        new_tags = (params[:tag_ids] || {}).keys.map(&:to_i)
+        if old_tags != new_tags
+          @post.tags = parse_tag_ids(params[:tag_ids])
+          updates << 'tags for post'
+        end
         flash[:notice] = "Updated #{updates.join(' and ')}" unless updates.empty?
         flash[:notice] = 'No changes' if updates.empty?
         redirect_to(admin_post_path(@post))
@@ -70,7 +76,7 @@ class Admin::PostsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     @post = Post.find(params[:id])
     if check_access(@post, 'delete')
@@ -79,7 +85,7 @@ class Admin::PostsController < ApplicationController
       redirect_to(admin_posts_path)
     end
   end
-  
+
   def publish
     @post = Post.find(params[:post_id])
     if check_access(@post, 'publish')
@@ -92,7 +98,7 @@ class Admin::PostsController < ApplicationController
       end
     end
   end
-  
+
   def quietly_publish
     @post = Post.find(params[:post_id])
     if check_access(@post, 'quietly publish')
@@ -105,7 +111,7 @@ class Admin::PostsController < ApplicationController
       end
     end
   end
-  
+
   def revert
     @post = Post.find(params[:post_id])
     if check_access(@post, 'revert')
@@ -120,7 +126,7 @@ class Admin::PostsController < ApplicationController
       end
     end
   end
-  
+
   def takedown
     @post = Post.find(params[:post_id])
     if check_access(@post, 'take down')
@@ -137,7 +143,7 @@ class Admin::PostsController < ApplicationController
       end
     end
   end
-  
+
   private
     def check_access(post, action)
       return true if post.user == @current_user
@@ -145,7 +151,7 @@ class Admin::PostsController < ApplicationController
       redirect_to(admin_post_path(post))
       false
     end
-    
+
     def parse_tag_ids(ids)
       tags = []
       unless ids.nil?
@@ -154,5 +160,9 @@ class Admin::PostsController < ApplicationController
         end
       end
       tags.compact
+    end
+
+    def post_param(_params = params)
+      _params.require(:post).permit(:user_id, :title_draft, :date, :permalink, :comments_open, :content_draft, :tags)
     end
 end

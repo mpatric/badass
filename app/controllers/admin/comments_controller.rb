@@ -1,10 +1,10 @@
 class Admin::CommentsController < ApplicationController
   layout 'admin'
-  
+
   before_filter :require_user
-  
+
   DEFAULT_PAGE_SIZE = 20
-  
+
   def index
     @posts = Post.by_date_descending
     @post = Post.find(params[:post_id]) unless params[:post_id].blank?
@@ -18,24 +18,24 @@ class Admin::CommentsController < ApplicationController
     @comments = @comments.paginate(:page => @page, :per_page => @per_page)
     @counts = {:all => all_comments.count, :junk => all_comments.junk.count, :not_junk => all_comments.not_junk.count}
   end
-  
+
   def show
     @comment = Comment.find(params[:id])
   end
-  
+
   def edit
     @comment = Comment.find(params[:id])
     if check_access(@comment, 'edit')
       @user = @current_user
     end
   end
-  
+
   def update
     @comment = Comment.find(params[:id])
     if params[:cancel]
       redirect_to(admin_comment_path(@comment))
     elsif check_access(@comment, 'update')
-      @comment.attributes = params[:comment]
+      @comment.attributes = comment_param
       did_change = @comment.changed?
       if @comment.save
         flash[:notice] = 'No changes' unless did_change
@@ -46,7 +46,7 @@ class Admin::CommentsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     @comment = Comment.find(params[:id])
     if check_access(@comment, 'delete')
@@ -55,7 +55,7 @@ class Admin::CommentsController < ApplicationController
       redirect_to(admin_comments_path(:post_id => @comment.post.id))
     end
   end
-  
+
   def junk
     @comment = Comment.find(params[:comment_id])
     if check_access(@comment, 'junk')
@@ -63,7 +63,7 @@ class Admin::CommentsController < ApplicationController
       redirect_to(admin_comment_path(@comment, :post_id => @comment.post.id))
     end
   end
-  
+
   def notjunk
     @comment = Comment.find(params[:comment_id])
     if check_access(@comment, 'unjunk')
@@ -71,7 +71,7 @@ class Admin::CommentsController < ApplicationController
       redirect_to(admin_comment_path(@comment, :post_id => @comment.post.id))
     end
   end
-  
+
   def bulk_action
     count = 0
     if params[:check].present?
@@ -104,12 +104,16 @@ class Admin::CommentsController < ApplicationController
     flash[:notice] = "#{comments_ids.count} junk comment#{comments_ids.count == 1 ? '' : 's'} deleted"
     redirect_to admin_dashboard_index_path
   end
-  
+
   private
     def check_access(comment, action)
       return true if comment.post.user == @current_user
       flash[:error] = "Can only #{action} comments for your own posts"
       redirect_to(admin_comment_path(comment))
       false
+    end
+
+    def comment_param(_params = params)
+      _params.require(:comment).permit(:author, :author_email, :author_url, :content, :created_at)
     end
 end

@@ -2,7 +2,7 @@ require 'ostruct'
 
 class Twitter
   include Singleton
-  
+
   def tweets
     return nil unless APP_CONFIG.twitter_enabled
     if @tweets.nil? or @last_download.nil? or (Time.now - APP_CONFIG.twitter_cache_time.seconds > @last_download)
@@ -10,7 +10,7 @@ class Twitter
     end
     @tweets
   end
-  
+
   private
     def download_tweets
       begin
@@ -33,14 +33,14 @@ class Twitter
       rescue
       end
     end
-    
+
     def link_urls(s)
       s.scan(/http:\/\/[^\s]+/).uniq.each do |url|
         s.gsub!(url, "<a href='#{url}'>#{url}</a>")
       end
       s
     end
-    
+
     def link_hashtags(s)
       s.scan(/\s#\w+/).uniq.each do |hashtag|
         s.gsub!(hashtag, " <a href='http://twitter.com/search?q=#{CGI::escape(hashtag.strip)}'>#{hashtag.strip}</a>")

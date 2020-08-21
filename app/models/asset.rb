@@ -1,6 +1,6 @@
 class Asset < ActiveRecord::Base
   belongs_to :user
-  
+
   validates_presence_of :title
   validate :file_does_not_exist
 
@@ -11,19 +11,19 @@ class Asset < ActiveRecord::Base
   validates_attachment_content_type :upload, :content_type => /\Aimage/
 
   before_post_process :is_image?
-  
-  scope :by_date_descending, :order => 'upload_updated_at DESC'
-  
+
+  scope :by_date_descending, -> { order(upload_updated_at: :desc) }
+
   DEFAULT_THUMBNAIL_URL = '/images/file.png'
-  
+
   def is_image?
     !(upload_content_type =~ /^image.*/).nil?
   end
-  
+
   def url
     self.upload.url
   end
-  
+
   def thumbnail_url
     if is_image?
       self.upload.url(:thumb)
@@ -31,10 +31,10 @@ class Asset < ActiveRecord::Base
       DEFAULT_THUMBNAIL_URL
     end
   end
-  
+
   private
     def file_does_not_exist
-      Asset.find_all_by_upload_file_name(self.upload_file_name).each do |asset|
+      Asset.where(upload_file_name: self.upload_file_name).each do |asset|
         next if asset.id = self.id
         errors[:base] << "File named #{self.upload_file_name} already exists"
         return
