@@ -1,16 +1,16 @@
 class HomeController < ApplicationController
   layout 'home'
-  
+
   before_filter :require_user, :only => :preview
 
   include BadassHelper
-  
+
   def index
     @all_tags = Tag.with_published_posts.by_label.uniq
     @all_posts = Post.published.by_last_published
     @posts = @all_posts.published.by_last_published.paginate(:page => params[:page], :per_page => APP_CONFIG.posts_per_page)
   end
-  
+
   def tag
     @all_tags = Tag.with_published_posts.by_label.uniq
     @tag = Tag.find_by_permalink(params[:label])
@@ -18,7 +18,7 @@ class HomeController < ApplicationController
     @posts = @all_posts.paginate(:page => params[:page], :per_page => APP_CONFIG.posts_per_page)
     render :template => 'home/index', :layout => 'home'
   end
-  
+
   def post
     @post = Post.find_by_permalink(params[:permalink])
     if @post.nil? or !@post.published?
@@ -37,11 +37,14 @@ class HomeController < ApplicationController
         return
       else
         # create comment
-        user_ip = request.env['REMOTE_ADDR']
-        user_agent = request.env['HTTP_USER_AGENT']
-        referrer = request.env['HTTP_REFERER']
         title = params[:comment].delete(:title)
-        @comment = Comment.new(params[:comment].merge({:user_ip => user_ip, :user_agent => user_agent, :referrer => referrer}))
+        tracking = {
+          user_ip: request.env['REMOTE_ADDR'],
+          user_agent: request.env['HTTP_USER_AGENT'],
+          referrer: request.env['HTTP_REFERER']
+        }
+        params_with_tracking = ActionController::Parameters.new({comment: params[:comment].merge(tracking)})
+        @comment = Comment.new(comment_param(params_with_tracking))
         @comment.junk = true unless title.blank? # title is a non-visible field, if it's populated it was by a bot
         @comment.recaptcha_failed = true unless verify_recaptcha(model: @comment)
         if @comment.save
@@ -62,7 +65,7 @@ class HomeController < ApplicationController
       render :layout => 'post'
     end
   end
-  
+
   def preview
     @post = Post.find_by_permalink(params[:permalink])
     if @post.nil?
@@ -73,7 +76,7 @@ class HomeController < ApplicationController
       render :layout => 'post'
     end
   end
-  
+
   def posts
     @tag = Tag.find_by_permalink(params[:tag]) if params[:tag]
     @posts = Post.published.with_tag(@tag).by_last_published if @tag
@@ -83,7 +86,7 @@ class HomeController < ApplicationController
       format.atom
     end
   end
-  
+
   def comments
     @post = Post.find_by_permalink(params[:post]) if params[:post]
     @comments = Comment.for_published_posts.for_post(@post).not_junk.by_date_descending if @post
@@ -93,7 +96,7 @@ class HomeController < ApplicationController
       format.atom
     end
   end
-  
+
   def render_404(exception = nil)
     respond_to do |format|
       format.html { render :layout => nil, :file => "#{Rails.root}/public/404.html", :status => :not_found }
@@ -101,4 +104,9 @@ class HomeController < ApplicationController
       format.any  { head :not_found }
     end
   end
+
+  private
+    def comment_param(_params = params)
+      _params.require(:comment).permit(:post_id, :author, :author_email, :author_url, :title, :content, :user_ip, :user_agent, :referrer, :junk)
+    end
 end

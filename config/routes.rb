@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  match '/admin/comments/clear_junk' => "admin/comments#clear_junk", :as => :clear_junk
+  delete '/admin/comments/clear_junk' => 'admin/comments#clear_junk', :as => :clear_junk
 
   namespace :admin do
     resource :profile, :controller => 'users'
@@ -21,28 +21,30 @@ Rails.application.routes.draw do
     resources :tags
     resources :dashboard, :only => :index
   end
-  
-  match '/register' => 'admin/users#new'
-  match '/login' => 'admin/user_sessions#new'
-  match '/logout' => 'admin/user_sessions#destroy'
-  
-  match '/admin' => redirect('/admin/dashboard')
 
-  match '/posts.:format' => 'home#posts', :format => 'atom'
-  match '/comments.:format', :controller => 'home', :action => 'comments', :format => 'atom'
-  
-  match '/:tag/posts.:format', :controller => 'home', :action => 'posts', :format => 'atom'
-  match '/:post/comments.:format', :controller => 'home', :action => 'comments', :format => 'atom'
-  
-  match '/tag/:label' => 'home#tag'
-  match '/tag/:label.:format' => 'home#tag'
-  
-  match '/:permalink' => 'home#post'
-  match '/:permalink/preview' => 'home#preview'
-  match '/:permalink.:format' => 'home#post'
-  
-  match ':controller(/:id(/:action(/:id)))'
-  match ':controller(/:id(/:action(/:id(.:format))))'
-  
+  get '/register' => 'admin/users#new'
+  get '/login' => 'admin/user_sessions#new'
+  get '/logout' => 'admin/user_sessions#destroy'
+
+  get '/admin' => redirect('/admin/dashboard')
+
+  get '/posts.:format' => 'home#posts', :format => 'atom'
+  get '/comments.:format', :controller => 'home', :action => 'comments', :format => 'atom'
+
+  get '/:tag/posts.:format', :controller => 'home', :action => 'posts', :format => 'atom'
+  get '/:post/comments.:format', :controller => 'home', :action => 'comments', :format => 'atom'
+
+  get '/tag/:label' => 'home#tag'
+  get '/tag/:label.:format' => 'home#tag'
+
+  get '/:permalink' => 'home#post'
+  get '/:permalink/preview' => 'home#preview'
+  get '/:permalink.:format' => 'home#post'
+
+  post '/:permalink' => 'home#post'
+
+  get ':controller(/:id(/:action(/:id)))'
+  get ':controller(/:id(/:action(/:id(.:format))))'
+
   root :to => "home#index"
 end

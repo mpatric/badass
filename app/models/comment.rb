@@ -1,23 +1,21 @@
 class Comment < ActiveRecord::Base
   include Rakismet::Model
-  
+
   belongs_to :post
-  
+
   validate :check_mandatory_fields
   validates_presence_of :author, :author_email, :content, :on => :update
-  
-  scope :by_date_descending, :order => 'created_at DESC'
-  scope :by_date_ascending, :order => 'created_at'
-  scope :for_post, lambda { |post| {:conditions => ['post_id = ?', post.id] }}
-  scope :for_published_posts, :joins => ['JOIN posts p ON p.id = comments.post_id'], :conditions => 'version IS NOT NULL'
-  scope :for_author, lambda { |user| {:joins => ['JOIN posts p ON comments.post_id = p.id'], :conditions => ['p.user_id = ?', user.id] }}
-  scope :not_junk, :conditions => {:junk => false}
-  scope :junk, :conditions => {:junk => true}
-  scope :with_tag, lambda { |tag| {
-    :joins => ['JOIN posts p ON p.id = comments.post_id', 'JOIN posts_tags pt ON pt.post_id = p.id'],
-    :conditions => ['pt.tag_id = ?', tag.id] }}
-  scope :since, lambda { |date| {:conditions => ['created_at > ?', date] }}
-  
+
+  scope :by_date_descending, -> { order(created_at: :desc) }
+  scope :by_date_ascending, -> { order(created_at: :asc) }
+  scope :for_post, ->(post) { where('post_id = ?', post.id) }
+  scope :for_published_posts, -> { joins('JOIN posts p ON p.id = comments.post_id').where('version IS NOT NULL') }
+  scope :for_author, ->(user) { joins('JOIN posts p ON comments.post_id = p.id').where('p.user_id = ?', user.id) }
+  scope :not_junk, -> { where('junk = ?', false) }
+  scope :junk, -> { where('junk = ?', true) }
+  scope :with_tag, ->(tag) { joins('JOIN posts p ON p.id = comments.post_id', 'JOIN posts_tags pt ON pt.post_id = p.id').where('pt.tag_id = ?', tag.id) }
+  scope :since, ->(date) { where('created_at > ?', date) }
+
   before_create :check_for_spam
 
   attr_accessor :recaptcha_failed
@@ -25,27 +23,27 @@ class Comment < ActiveRecord::Base
   def content_html
     markdown(self.content)
   end
-  
+
   def content_text
     Nokogiri::HTML(content_html).xpath("//text()").text
   end
-  
+
   def permalink
     "#{self.post.permalink}##{self.id}"
   end
-  
+
   def permalink_url
     self.post.permalink_url ? "#{self.post.permalink_url}##{self.id}" : nil
   end
-  
+
   def full_permalink_url
     permalink_url ? "http://#{File.join(APP_CONFIG.domain, permalink_url)}" : nil
   end
-  
+
   def avatar_url(default_host=nil, default_port=nil)
     Avatar.avatar_url(self.author_email, default_host, default_port)
   end
-  
+
   def junk!
     unless self.junk?
       self.spam! if using_askimet?
@@ -53,7 +51,7 @@ class Comment < ActiveRecord::Base
       self.save
     end
   end
-  
+
   def not_junk!
     if self.junk?
       self.ham! if using_askimet?
@@ -61,7 +59,7 @@ class Comment < ActiveRecord::Base
       self.save
     end
   end
-  
+
   private
     def check_mandatory_fields
       return unless self.new_record?
