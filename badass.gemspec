@@ -31,6 +31,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency(%q<paperclip>, ["~> 6.1"])
   s.add_runtime_dependency(%q<grackle>, ["~> 0.3.0"])
   s.add_runtime_dependency(%q<aws-sdk>, ["~> 3"])
-  s.add_runtime_dependency(%q<nokogiri>, ["~> 1.8.1"])
+  s.add_runtime_dependency(%q<nokogiri>, ">= 1.8.1", "< 1.14.0")
   s.add_runtime_dependency(%q<recaptcha>, ["~> 4.3.1"])
 end
